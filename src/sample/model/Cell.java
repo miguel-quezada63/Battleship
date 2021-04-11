@@ -1,7 +1,7 @@
 package sample.model;
 
 public class Cell {
-    private Ship ship = null;
+    private Ship ship;
     private boolean isHit;
     private int x;
     private int y;
@@ -13,7 +13,7 @@ public class Cell {
         this.y = y;
     }
 
-    public Cell(Ship ship, int x, int y) {
+    public Cell(int x, int y, Ship ship) {
         this.ship = ship;
         this.isHit = false;
         this.x = x;
@@ -22,6 +22,8 @@ public class Cell {
 
     public void hit() {
         this.isHit = true;
+        if(ship != null)
+            ship.hit();
     }
 
     public Ship getShip() {

@@ -14,10 +14,10 @@ public class Ship {
     }
 
     public boolean isSunk(){
-        return availableSpaces < 0;
+        return availableSpaces <= 0;
     }
 
-    public void spaceHit(){
+    public void hit(){
         --availableSpaces;
     }
 
