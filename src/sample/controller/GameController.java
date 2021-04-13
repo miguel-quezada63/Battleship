@@ -1,8 +1,12 @@
 package sample.controller;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -10,6 +14,8 @@ import javafx.scene.text.Text;
 import sample.model.Cell;
 import sample.model.Game;
 import sample.utility.Player;
+
+import java.io.IOException;
 
 public class GameController {
     private final static String HIT_COLOR = "-fx-background-color: #e71f32;";
@@ -33,6 +39,10 @@ public class GameController {
     private Text gamePlayerTurnText;
     @FXML
     private Button gamePlayTurnBtn;
+    @FXML
+    private Button saveMenuBtn;
+    @FXML
+    private Button rulesMenuBtn;
 
     @FXML
     void initialize() {
@@ -112,6 +122,30 @@ public class GameController {
             switchBoard();
             disableAndHide(gameNextTurnPane);
         });
+        saveMenuBtn.setOnAction(e-> {
+            try {
+                Parent newRoot = FXMLLoader.load(getClass().getResource("/sample/view/save.fxml"));
+                Scene s = saveMenuBtn.getScene();
+                s.setRoot(newRoot);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+
+            System.out.println("SAVE CLICKED!");
+        });
+        rulesMenuBtn.setOnAction(e-> {
+            try {
+                Parent newRoot = FXMLLoader.load(getClass().getResource("/sample/view/rules.fxml"));
+                Scene s = rulesMenuBtn.getScene();
+                s.setRoot(newRoot);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+
+            System.out.println("RULES CLICKED!");
+        });
+
+
     }
 
     private void switchBoard() {

@@ -444,6 +444,8 @@
             </VBox>
          </children>
       </HBox>
+      <Button fx:id="saveMenuBtn" layoutX="0.0" layoutY="0.0" mnemonicParsing="false" style="-fx-background-color: #EE4266;" text="Save " textFill="WHITE" />
+      <Button fx:id="rulesMenuBtn" layoutX="0.0" layoutY="30.0" mnemonicParsing="false" style="-fx-background-color: #EE4266;" text="Rules" textFill="WHITE" />
       <Button fx:id="gameFireBtn" layoutX="452.0" layoutY="644.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="96.0" style="-fx-background-color: #EE4266;" text="FIRE!" textFill="#e3ebff">
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -453,7 +455,7 @@
             <Cursor fx:constant="HAND" />
          </cursor></Button>
       <Text layoutY="-13.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="829.13671875" />
-      <Pane fx:id="gameNextTurnPane" prefHeight="750.0" prefWidth="1000.0" style="-fx-background-color: #5a7797;">
+      <Pane fx:id="gameNextTurnPane" layoutX="2.0" prefHeight="750.0" prefWidth="1000.0" style="-fx-background-color: #5a7797;">
          <children>
             <Text fx:id="gamePlayerTurnText" fill="WHITE" layoutX="2.0" layoutY="282.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="1000.0">
                <font>
