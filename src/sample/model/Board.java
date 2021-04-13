@@ -4,8 +4,8 @@ import sample.utility.Orientation;
 import sample.utility.ShipType;
 
 public class Board {
-    final static int MAX_ROW = 10;
-    final static int MAX_COL = 10;
+    final static int MAX_ROW = 11;
+    final static int MAX_COL = 11;
     Cell[][] grid = new Cell[MAX_ROW][MAX_COL]; // Grid holding cells for game
 
     // Initialize our grid
@@ -15,14 +15,16 @@ public class Board {
 
     // place empty cells throughout our grid with respective coordinates
     void initGrid() {
-        for(int x = 0; x < 10; ++x) {
-            for(int y = 0; y < 10; ++y) {
-                grid[x][y] = new Cell(x, y);
+        for(int row = 1; row < 11; ++row) {
+            for(int col = 1; col < 11; ++col) {
+                grid[row][col] = new Cell(row, col);
             }
         }
     }
     // Return the respective cell based on x, y coordinate
-    public Cell getCellByCoord(int x, int y){
-        return grid[x - 1][y - 1];
+    public Cell getCellByCoord(int row, int col){
+        return grid[row][col];
     }
+
+    public Cell[][] getGrid() { return this.grid; }
 }

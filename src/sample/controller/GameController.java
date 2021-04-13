@@ -45,6 +45,7 @@ public class GameController {
 
     @FXML
     void initialize() {
+        System.out.println("Initialize Game");
         createNewGame();
     }
 
@@ -61,28 +62,28 @@ public class GameController {
     }
 
     private void addGridEvents() {
-        for(int x = 1; x < 11; ++x) {
-            for (int y = 1; y < 11; ++y) {
+        for(int row = 1; row < 11; ++row) {
+            for (int col = 1; col < 11; ++col) {
                 Button btn = new Button(""); // create new button to place on grid
                 btn.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE); // set btn width and height so that it fills the entire cell area
                 btn.setStyle(DEFAULT_STYLES); // set default styles for btn
-                Cell cellOpp = Game.getOpponentBoard().getCellByCoord(x, y); // get cell corresponding with current coordinates in loop
+                Cell cellOpp = Game.getOpponentBoard().getCellByCoord(row, col); // get cell corresponding with current coordinates in loop
                 if(cellOpp.isHit() && cellOpp.getShip() != null) // if the cell has a successful hit, display this on the board
                     btn.setStyle(HIT_COLOR);
                 else if(cellOpp.isHit())
                     btn.setStyle(MISS_COLOR);
-                gameOpponentBoard.add(btn, x, y); // add the button to the grid
+                gameOpponentBoard.add(btn, col, row); // add the button to the grid
 
                 StackPane sPane = new StackPane();
                 sPane.setStyle(DEFAULT_STYLES);
                 GridPane.setFillWidth(sPane, true);
                 GridPane.setFillHeight(sPane, true);
-                Cell cellPlayer = Game.getPlayerBoard().getCellByCoord(x, y); // get cell corresponding with current coordinates in loop
+                Cell cellPlayer = Game.getPlayerBoard().getCellByCoord(row, col); // get cell corresponding with current coordinates in loop
                 if(cellPlayer.isHit() && cellPlayer.getShip() != null) // if the cell has a successful hit, display this on the board
                     sPane.setStyle(HIT_COLOR);
                 else if(cellPlayer.isHit())
                     sPane.setStyle(MISS_COLOR);
-                gameYouBoard.add(sPane, x, y);
+                gameYouBoard.add(sPane, col, row);
             }
         }
 
@@ -91,10 +92,12 @@ public class GameController {
                     if(!alreadyFired) {
                         if(selectedItem != null)
                             selectedItem.setStyle(DEFAULT_STYLES);
-                        Integer x = GridPane.getRowIndex((Node) e.getSource()); // get row of the current cell
-                        Integer y = GridPane.getColumnIndex((Node) e.getSource()); // get col of the current cell
-                        if (x == null || y == null) return; // if either are null, do not place an event listener on this position
-                        Game.setCurMove(x, y); // set current move in order to hit for later
+                        Integer row = GridPane.getRowIndex((Node) e.getSource()); // get row of the current cell
+                        Integer col = GridPane.getColumnIndex((Node) e.getSource()); // get col of the current cell
+                        System.out.println("Row: " + row + " Col: " + col);
+                        if (row == null || col == null) return; // if either are null, do not place an event listener on this position
+                        Game.setCurMove(row, col); // set current move in order to hit for later
+                        System.out.println(row + " " + col);
                         selectedItem = item; // select cell for future styling
                         item.setStyle(FOCUS_COLOR);
                         undisableAndUnhide(gameFireBtn);
@@ -128,6 +131,7 @@ public class GameController {
             switchBoard();
             disableAndHide(gameNextTurnPane);
         });
+
         saveMenuBtn.setOnAction(e-> {
             try {
                 Parent newRoot = FXMLLoader.load(getClass().getResource("/sample/view/save.fxml"));
@@ -148,19 +152,26 @@ public class GameController {
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
-
             System.out.println("RULES CLICKED!");
         });
-
-
     }
 
     private void switchBoard() {
-        for(int y = 1; y < 11; ++y){
-            for(int x = 1; x < 11; ++x){
-                Node oppN = getNode(x, y, gameOpponentBoard);
+        for(int row = 1; row < 11; ++row){
+            for(int col = 1; col < 11; ++col) {
+                Cell c = Game.getPlayerBoard().getGrid()[row][col];
+                System.out.println("CELL: ");
+                System.out.println("Row: " + c.getRow() + ", Col: " + c.getCol());
+                System.out.println("IsHit: " + c.isHit() + ", Ship:" + c.getShip());
+                System.out.println("\n\n");
+            }
+        }
+
+        for(int row = 1; row < 11; ++row){
+            for(int col = 1; col < 11; ++col){
+                Node oppN = getNode(row, col, gameOpponentBoard);
                 if (oppN == null) continue;
-                Cell oppC = Game.getOpponentBoard().getCellByCoord(x, y);
+                Cell oppC = Game.getOpponentBoard().getCellByCoord(row, col);
                 if(oppC.isHit() && oppC.getShip() != null)
                     oppN.setStyle(HIT_COLOR + DEFAULT_STYLES_NO_BG);
                 else if(oppC.isHit())
@@ -168,9 +179,9 @@ public class GameController {
                 else
                     oppN.setStyle(DEFAULT_STYLES);
 
-                Node playerN = getNode(x, y, gameYouBoard);
+                Node playerN = getNode(row, col, gameYouBoard);
                 if(playerN == null) continue;
-                Cell playerC = Game.getPlayerBoard().getCellByCoord(x, y);
+                Cell playerC = Game.getPlayerBoard().getCellByCoord(row, col);
                 if(playerC.isHit() && playerC.getShip() != null)
                     playerN.setStyle(HIT_COLOR + DEFAULT_STYLES_NO_BG);
                 else if(playerC.isHit())

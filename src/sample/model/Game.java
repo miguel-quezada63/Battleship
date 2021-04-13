@@ -28,7 +28,7 @@ public class Game {
     }
 
     public static boolean hitCell(){
-        Cell c =  getOpponentBoard().getCellByCoord(curMove[0], curMove[0]); // get cell within the specified board in which the user clicked
+        Cell c =  getOpponentBoard().getCellByCoord(curMove[0], curMove[1]); // get cell within the specified board in which the user clicked
         c.hit(); // hit that cell in the specified board
         if(c.getShip() != null && c.getShip().isSunk()) // If a ship exists on this tile and this ship has been sunk, print to console
             System.out.println(c.getShip().getShipType() + " " + "has been sunk");

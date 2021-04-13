@@ -3,21 +3,21 @@ package sample.model;
 public class Cell {
     private Ship ship;
     private boolean isHit;
-    private int x;
-    private int y;
+    private int row;
+    private int col;
 
     public Cell(int x, int y) {
         this.ship = null;
         this.isHit = false;
-        this.x = x;
-        this.y = y;
+        this.row = x;
+        this.col = y;
     }
 
     public Cell(int x, int y, Ship ship) {
         this.ship = ship;
         this.isHit = false;
-        this.x = x;
-        this.y = y;
+        this.row = x;
+        this.col = y;
     }
 
     public void hit() {
@@ -34,11 +34,11 @@ public class Cell {
         return isHit;
     }
 
-    public int getX() {
-        return x;
+    public int getRow() {
+        return row;
     }
 
-    public int getY() {
-        return y;
+    public int getCol() {
+        return col;
     }
 }
