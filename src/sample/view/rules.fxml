@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" style="-fx-background-color: #5a7797;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.RulesController">
+   <children>
+      <Button fx:id="closeRules" layoutX="7.0" layoutY="7.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="110.0" style="-fx-background-color: #EE4266;" text="Close" />
+      <Text fill="WHITE" layoutX="444.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rules">
+         <font>
+            <Font size="48.0" />
+         </font>
+      </Text>
+      <TextArea layoutX="31.0" layoutY="137.0" prefHeight="513.0" prefWidth="930.0" text="1. Each player must select where they would like to place their ships while staying within the confines of the map.&#10;&#10;2. Each player will be given a Carrier(1x5), BattleShip(1x4), Cruiser(1x3), Submarine(1x3), Destroyer(1x2).&#10;&#10;3. When placing ships please select whether or not you would like to place your ship vertically or horizontially, if your ship placement exceeds the bounds of&#10;    the map.&#10;&#10;4. When placing ships upon the board in two player mode, please have the other player look away.&#10;&#10;5. Each player gets 1 chance to shoot at the other players board in order to locate their ship, if the player hits a ship then they are given another turn.&#10;&#10;6. Once your turn is over click next turn and pass the computer to the second player.&#10;&#10;7. To take your shot click a space on the opponents grid and then click fire to confirm selection.&#10;&#10;8. If your shot is a miss it will show up as a white space on the board. If your shot is a hit it will show up as a red space.&#10;&#10;&#10;" />
+   </children>
+</AnchorPane>
