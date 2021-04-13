@@ -8,6 +8,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
+
+
 public class MenuController {
     @FXML
     private Button menuPlayBtn;
@@ -32,12 +34,20 @@ public class MenuController {
 
         menuLoadBtn.setOnAction(e -> {
             System.out.println("LOAD CLICKED!");
+            try {
+                Parent newRoot = FXMLLoader.load(getClass().getResource("/sample/view/load.fxml"));
+                Scene s = menuLoadBtn.getScene();
+                s.setRoot(newRoot);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
         });
 
         menuQuitBtn.setOnAction(e -> {
             Stage s = (Stage) menuQuitBtn.getScene().getWindow();
             s.close();
         });
+
     }
 
 }
