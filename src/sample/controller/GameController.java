@@ -56,27 +56,33 @@ public class GameController {
         gameNextTurnPane.setDisable(true);
         gameNextTurnPane.setVisible(false);
         selectedItem = null; // selected item to null so that no conflicts occur on first turn
-        Game.init(); // init game settings
+        if (!Game.isStarted()) Game.init(); // init game settings
         addGridEvents(); // add all grid buttons and btn events
     }
 
     private void addGridEvents() {
-        for(int y = 1; y < 11; ++y) {
-            for (int x = 1; x < 11; ++x) {
+        for(int x = 1; x < 11; ++x) {
+            for (int y = 1; y < 11; ++y) {
                 Button btn = new Button(""); // create new button to place on grid
                 btn.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE); // set btn width and height so that it fills the entire cell area
                 btn.setStyle(DEFAULT_STYLES); // set default styles for btn
-                Cell cell = Game.getOpponentBoard().getCellByCoord(x, y); // get cell corresponding with current coordinates in loop
-                if(cell.isHit() && cell.getShip() != null) // if the cell has a successful hit, display this on the board
+                Cell cellOpp = Game.getOpponentBoard().getCellByCoord(x, y); // get cell corresponding with current coordinates in loop
+                if(cellOpp.isHit() && cellOpp.getShip() != null) // if the cell has a successful hit, display this on the board
                     btn.setStyle(HIT_COLOR);
-                else if(cell.isHit())
+                else if(cellOpp.isHit())
                     btn.setStyle(MISS_COLOR);
                 gameOpponentBoard.add(btn, x, y); // add the button to the grid
+
                 StackPane sPane = new StackPane();
                 sPane.setStyle(DEFAULT_STYLES);
                 GridPane.setFillWidth(sPane, true);
                 GridPane.setFillHeight(sPane, true);
-                gameYouBoard.add(sPane,x, y);
+                Cell cellPlayer = Game.getPlayerBoard().getCellByCoord(x, y); // get cell corresponding with current coordinates in loop
+                if(cellPlayer.isHit() && cellPlayer.getShip() != null) // if the cell has a successful hit, display this on the board
+                    sPane.setStyle(HIT_COLOR);
+                else if(cellPlayer.isHit())
+                    sPane.setStyle(MISS_COLOR);
+                gameYouBoard.add(sPane, x, y);
             }
         }
 
@@ -104,6 +110,7 @@ public class GameController {
             Game.setCurMove(-1,-1);
             disableAndHide(gameFireBtn); // hide fire btn
             undisableAndUnhide(gameNextBtn); // show next btn
+            Game.nextTurn();
             alreadyFired = true; // set already fired to true so that the player cannot fire twice
             selectedItem = null; // unselect cell
         });
@@ -114,7 +121,7 @@ public class GameController {
             else
                 gamePlayerTurnText.setText("End of Player 2's turn, Player 1 turn up next!");
             undisableAndUnhide(gameNextTurnPane);
-            Game.nextTurn();
+
         });
 
         gamePlayTurnBtn.setOnAction(e -> {
@@ -132,6 +139,7 @@ public class GameController {
 
             System.out.println("SAVE CLICKED!");
         });
+
         rulesMenuBtn.setOnAction(e-> {
             try {
                 Parent newRoot = FXMLLoader.load(getClass().getResource("/sample/view/rules.fxml"));
@@ -152,7 +160,6 @@ public class GameController {
             for(int x = 1; x < 11; ++x){
                 Node oppN = getNode(x, y, gameOpponentBoard);
                 if (oppN == null) continue;
-
                 Cell oppC = Game.getOpponentBoard().getCellByCoord(x, y);
                 if(oppC.isHit() && oppC.getShip() != null)
                     oppN.setStyle(HIT_COLOR + DEFAULT_STYLES_NO_BG);
@@ -160,6 +167,7 @@ public class GameController {
                     oppN.setStyle(MISS_COLOR + DEFAULT_STYLES_NO_BG);
                 else
                     oppN.setStyle(DEFAULT_STYLES);
+
                 Node playerN = getNode(x, y, gameYouBoard);
                 if(playerN == null) continue;
                 Cell playerC = Game.getPlayerBoard().getCellByCoord(x, y);

@@ -454,23 +454,6 @@
             <Cursor fx:constant="HAND" />
          </cursor></Button>
       <Text layoutY="-13.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="829.13671875" />
-      <Pane fx:id="gameNextTurnPane" layoutX="2.0" opacity="0.0" prefHeight="750.0" prefWidth="1000.0" style="-fx-background-color: #5a7797;">
-         <children>
-            <Text fx:id="gamePlayerTurnText" fill="WHITE" layoutX="2.0" layoutY="282.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="1000.0">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-            </Text>
-            <Button fx:id="gamePlayTurnBtn" layoutX="435.0" layoutY="356.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="133.0" style="-fx-background-color: #848482;" text="NEXT TURN" textAlignment="CENTER" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-         </children>
-      </Pane>
       <ToolBar prefHeight="21.0" prefWidth="1000.0" style="-fx-background-color: #e9e9e9;">
         <items>
           <Button fx:id="saveMenuBtn" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Save">
@@ -488,5 +471,22 @@
             </Button>
         </items>
       </ToolBar>
+      <Pane fx:id="gameNextTurnPane" prefHeight="750.0" prefWidth="1000.0" style="-fx-background-color: #5a7797;">
+         <children>
+            <Text fx:id="gamePlayerTurnText" fill="WHITE" layoutX="2.0" layoutY="282.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="1000.0">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Text>
+            <Button fx:id="gamePlayTurnBtn" layoutX="435.0" layoutY="356.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="133.0" style="-fx-background-color: #848482;" text="NEXT TURN" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

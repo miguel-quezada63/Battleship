@@ -15,14 +15,14 @@ public class Board {
 
     // place empty cells throughout our grid with respective coordinates
     void initGrid() {
-        for(int y = 0; y < 10; ++y) {
-            for(int x = 0; x < 10; ++x) {
-                grid[y][x] = new Cell(x, y);
+        for(int x = 0; x < 10; ++x) {
+            for(int y = 0; y < 10; ++y) {
+                grid[x][y] = new Cell(x, y);
             }
         }
     }
     // Return the respective cell based on x, y coordinate
     public Cell getCellByCoord(int x, int y){
-        return grid[y - 1][x - 1];
+        return grid[x - 1][y - 1];
     }
 }

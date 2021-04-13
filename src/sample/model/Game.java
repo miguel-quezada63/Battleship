@@ -10,6 +10,7 @@ public class Game {
     private static Player curPlayer;
     private static int turnNum;
     private static int[] curMove;
+    private static boolean started = false;
 
     public static void init() {
         turnNum = 0; // Set turns back to 0
@@ -17,6 +18,7 @@ public class Game {
         curPlayer = Player.P1; // set current player to Player 1
         p1Board.initGrid(); // reset p1's board
         p2Board.initGrid(); // reset p2's board
+        setStarted(true);
     }
 
     public static void nextTurn() {
@@ -26,7 +28,7 @@ public class Game {
     }
 
     public static boolean hitCell(){
-        Cell c =  getOpponentBoard().getCellByCoord(curMove[0], curMove[1]); // get cell within the specified board in which the user clicked
+        Cell c =  getOpponentBoard().getCellByCoord(curMove[0], curMove[0]); // get cell within the specified board in which the user clicked
         c.hit(); // hit that cell in the specified board
         if(c.getShip() != null && c.getShip().isSunk()) // If a ship exists on this tile and this ship has been sunk, print to console
             System.out.println(c.getShip().getShipType() + " " + "has been sunk");
@@ -54,6 +56,14 @@ public class Game {
     public static void setCurMove(int x, int y) {
         curMove[X] = x;
         curMove[Y] = y;
+    }
+
+    public static void setStarted(boolean started) {
+        Game.started = started;
+    }
+
+    public static boolean isStarted() {
+        return started;
     }
 
 }
