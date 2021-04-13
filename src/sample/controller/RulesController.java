@@ -11,14 +11,14 @@ import java.io.IOException;
 
 public class RulesController {
     @FXML
-    private Button closeRules;
+    private Button rulesCloseBtn;
 
     @FXML
     void initialize() {
-        closeRules.setOnAction(e-> {
+        rulesCloseBtn.setOnAction(e-> {
             try {
                 Parent newRoot = FXMLLoader.load(getClass().getResource("/sample/view/game.fxml"));
-                Scene s = closeRules.getScene();
+                Scene s = rulesCloseBtn.getScene();
                 s.setRoot(newRoot);
             } catch (IOException ioException) {
                 ioException.printStackTrace();
