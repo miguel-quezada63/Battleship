@@ -39,15 +39,17 @@ public class LoadController {
             {
                 System.out.println("Please select a different file!");
             }
-            Load.loadGame(selectedFile);
-            try {
-                Parent newRoot = FXMLLoader.load(getClass().getResource("/sample/view/game.fxml"));
-                Scene s = loadGameBtn.getScene();
-                s.setRoot(newRoot);
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
+            else {
+                Load.loadGame(selectedFile);
+                try {
+                    Parent newRoot = FXMLLoader.load(getClass().getResource("/sample/view/game.fxml"));
+                    Scene s = loadGameBtn.getScene();
+                    s.setRoot(newRoot);
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+                System.out.println("LOAD GAME!");
             }
-            System.out.println("LOAD GAME!");
         });
     }
 
