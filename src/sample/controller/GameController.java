@@ -179,7 +179,7 @@ public class GameController {
                     oppN.setStyle(DEFAULT_STYLES);
 
                 Node playerN = getNode(row, col, gameYouBoard);
-                if(playerN == null) continue;
+                if(playerN == null) continue; // hello
                 Cell playerC = Game.getPlayerBoard().getCellByCoord(row, col);
                 if(playerC.isHit() && playerC.getShip() != null)
                     playerN.setStyle(HIT_COLOR + DEFAULT_STYLES_NO_BG);
