@@ -105,9 +105,9 @@ public class GameController {
         });
 
         gameFireBtn.setOnAction(e -> {
-            if(Game.hitCell()) // hit target using curMove. If the hit was successful, display a hit on that cell
+            if (Game.hitCell()) // hit target using curMove. If the hit was successful, display a hit on that cell
                 selectedItem.setStyle(HIT_COLOR);
-            else // else, display a miss on that cell
+            else  // else, display a miss on that cell
                 selectedItem.setStyle(MISS_COLOR);
             Game.setCurMove(-1,-1);
             disableAndHide(gameFireBtn); // hide fire btn
