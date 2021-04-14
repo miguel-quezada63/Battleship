@@ -3,10 +3,21 @@ package sample.model;
 import sample.utility.Orientation;
 import sample.utility.ShipType;
 
+
 public class Board {
     final static int MAX_ROW = 11;
     final static int MAX_COL = 11;
-    Cell[][] grid = new Cell[MAX_ROW][MAX_COL]; // Grid holding cells for game
+    private Cell[][] grid = new Cell[MAX_ROW][MAX_COL]; // Grid holding cells for game
+    private Orientation orientation;
+
+    public void setOrientation(Orientation orientation) {
+        this.orientation = orientation;
+    }
+
+    public Orientation getOrientation() {
+        return orientation;
+    }
+
 
     // Initialize our grid
     public Board() {
@@ -20,6 +31,7 @@ public class Board {
                 grid[row][col] = new Cell(row, col);
             }
         }
+        setOrientation(Orientation.HORIZONTAL);//SETS ORIENTATION TO HORIZONTAL BY DEAFULT
     }
 
 
@@ -29,4 +41,6 @@ public class Board {
     }
 
     public Cell[][] getGrid() { return this.grid; }
+
+
 }
