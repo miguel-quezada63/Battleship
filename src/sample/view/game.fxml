@@ -454,23 +454,6 @@
             <Cursor fx:constant="HAND" />
          </cursor></Button>
       <Text layoutY="-13.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="829.13671875" />
-      <ToolBar prefHeight="21.0" prefWidth="1000.0" style="-fx-background-color: #e9e9e9;">
-        <items>
-          <Button fx:id="saveMenuBtn" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Save">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <font>
-                  <Font size="11.0" />
-               </font>
-            </Button>
-            <Button id="rulesBtn" fx:id="rulesMenuBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="50.0" style="-fx-background-color: transparent;" styleClass="#rulesBtn:hover { -fx-background-color: red;}" text="Rules">
-               <font>
-                  <Font size="11.0" />
-               </font>
-            </Button>
-        </items>
-      </ToolBar>
       <Pane fx:id="gameNextTurnPane" prefHeight="750.0" prefWidth="1000.0" style="-fx-background-color: #5a7797;">
          <children>
             <Text fx:id="gamePlayerTurnText" fill="WHITE" layoutX="2.0" layoutY="282.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="1000.0">
@@ -488,5 +471,22 @@
             </Button>
          </children>
       </Pane>
+      <ToolBar prefHeight="21.0" prefWidth="1000.0" style="-fx-background-color: #e9e9e9;">
+        <items>
+          <Button fx:id="saveMenuBtn" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Save">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Button>
+            <Button id="rulesBtn" fx:id="rulesMenuBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="50.0" style="-fx-background-color: transparent;" styleClass="#rulesBtn:hover { -fx-background-color: red;}" text="Rules">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Button>
+        </items>
+      </ToolBar>
    </children>
 </AnchorPane>

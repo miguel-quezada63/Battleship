@@ -27,7 +27,6 @@ public class LoadController {
             System.out.println("LOAD GAME!");
         });
     }
-
 }
 
 

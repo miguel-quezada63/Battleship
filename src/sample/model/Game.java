@@ -22,7 +22,7 @@ public class Game {
     }
 
     public static void nextTurn() {
-        curMove = new int[2];
+        curMove = new int[2]; // reset current move
         curPlayer = curPlayer == Player.P1 ? Player.P2 : Player.P1; // alternate players
         ++turnNum; // increase turn number
     }
