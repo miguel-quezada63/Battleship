@@ -21,6 +21,8 @@ public class Board {
             }
         }
     }
+
+
     // Return the respective cell based on row and col
     public Cell getCellByCoord(int row, int col){
         return grid[row][col];

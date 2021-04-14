@@ -1,22 +1,40 @@
 package sample.controller;
 
-import javafx.event.ActionEvent;
+import java.net.URL;
+import java.util.ResourceBundle;
 import javafx.fxml.FXML;
-import javafx.scene.control.MenuButton;
+import javafx.scene.control.Button;
+import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 
 public class PlacementController {
 
     @FXML
-    private MenuButton ShipPosition;
+    private ResourceBundle resources;
 
     @FXML
-    void SetOrientationH(ActionEvent event) {
-
-    }
+    private URL location;
 
     @FXML
-    void SetOrientationV(ActionEvent event) {
+    private GridPane placementBoardGrid;
+
+    @FXML
+    private Text placementShipText;
+
+    @FXML
+    private Text placementSizeText;
+
+    @FXML
+    private Text placementOrientationText;
+
+    @FXML
+    private Button placementOrientationBtn;
+
+    @FXML
+    private Button placementNextBtn;
+
+    @FXML
+    void initialize() {
 
     }
-
 }
