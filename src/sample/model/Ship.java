@@ -25,6 +25,10 @@ public class Ship {
         this.orientation = orientation;
     }
 
+    public void SetOrientationH(){this.orientation = Orientation.HORIZONTAL;}
+
+    public void SetOrientationV(){this.orientation = Orientation.VERTICAL;}
+
     public Orientation getOrientation() {
         return orientation;
     }
