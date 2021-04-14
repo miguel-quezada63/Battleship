@@ -1,7 +1,4 @@
 package sample.model;
-
-import com.google.gson.Gson;
-
 import java.io.*;
 
 public class Load
