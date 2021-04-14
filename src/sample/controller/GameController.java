@@ -13,8 +13,6 @@ import javafx.scene.text.Text;
 import sample.model.Cell;
 import sample.model.Game;
 import sample.utility.Player;
-
-import java.awt.event.MouseEvent;
 import java.io.IOException;
 
 public class GameController {
@@ -23,7 +21,6 @@ public class GameController {
     private final static String FOCUS_COLOR = "-fx-background-color: #eae265;";
     private final static String DEFAULT_STYLES = "-fx-background-color: #848482; -fx-border-width: 2 2 0 0; -fx-border-color:  #5a7797;";
     private final static String DEFAULT_STYLES_NO_BG = "-fx-border-width: 1 1 0 0; -fx-border-color:  #5a7797;";
-    private final static String FULL_OPACITY = "-fx-opacity: 1.0;";
     private Node selectedItem;
     private boolean alreadyFired;
     @FXML
@@ -66,7 +63,6 @@ public class GameController {
     private void addGridEvents() {
         for(int row = 1; row < 11; ++row) {
             for (int col = 1; col < 11; ++col) {
-                // build opponent board
                 Button btn = new Button(""); // create new button to place on grid
                 btn.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE); // set btn width and height so that it fills the entire cell area
                 btn.setStyle(DEFAULT_STYLES); // set default styles for btn
@@ -76,17 +72,17 @@ public class GameController {
                 else if(cellOpp.isHit())
                     btn.setStyle(MISS_COLOR);
                 gameOpponentBoard.add(btn, col, row); // add the button to the grid
-                // build player board
-                StackPane sPane = new StackPane(); // create stack pane for each cell
-                sPane.setStyle(DEFAULT_STYLES); // set default styles on stack panee
-                GridPane.setFillWidth(sPane, true); // fill width of cell
-                GridPane.setFillHeight(sPane, true); // fill height of cell
+
+                StackPane sPane = new StackPane();
+                sPane.setStyle(DEFAULT_STYLES);
+                GridPane.setFillWidth(sPane, true);
+                GridPane.setFillHeight(sPane, true);
                 Cell cellPlayer = Game.getPlayerBoard().getCellByCoord(row, col); // get cell corresponding with current coordinates in loop
                 if(cellPlayer.isHit() && cellPlayer.getShip() != null) // if the cell has a successful hit, display this on the board
                     sPane.setStyle(HIT_COLOR);
                 else if(cellPlayer.isHit())
                     sPane.setStyle(MISS_COLOR);
-                gameYouBoard.add(sPane, col, row); // add stack pane to corresponding cell in gridpane
+                gameYouBoard.add(sPane, col, row);
             }
         }
 
@@ -97,8 +93,8 @@ public class GameController {
                             selectedItem.setStyle(DEFAULT_STYLES);
                         Integer row = GridPane.getRowIndex((Node) e.getSource()); // get row of the current cell
                         Integer col = GridPane.getColumnIndex((Node) e.getSource()); // get col of the current cell
-                        // if either are null or the selected cell is already hit, do not set as current move.
-                        if (row == null || col == null || Game.getOpponentBoard().getCellByCoord(row, col).isHit()) return;
+                        System.out.println("Row: " + row + " Col: " + col);
+                        if (row == null || col == null) return; // if either are null, do not place an event listener on this position
                         Game.setCurMove(row, col); // set current move in order to hit for later
                         System.out.println(row + " " + col);
                         selectedItem = item; // select cell for future styling
@@ -109,11 +105,10 @@ public class GameController {
         });
 
         gameFireBtn.setOnAction(e -> {
-            selectedItem.setDisable(true);
             if(Game.hitCell()) // hit target using curMove. If the hit was successful, display a hit on that cell
-                selectedItem.setStyle(HIT_COLOR + FULL_OPACITY);
+                selectedItem.setStyle(HIT_COLOR);
             else // else, display a miss on that cell
-                selectedItem.setStyle(MISS_COLOR + FULL_OPACITY);
+                selectedItem.setStyle(MISS_COLOR);
             Game.setCurMove(-1,-1);
             disableAndHide(gameFireBtn); // hide fire btn
             undisableAndUnhide(gameNextBtn); // show next btn
@@ -173,23 +168,18 @@ public class GameController {
 
         for(int row = 1; row < 11; ++row){
             for(int col = 1; col < 11; ++col){
-                Node oppN = getNode(row, col, gameOpponentBoard); // Get current node in opponent's board
-                if (oppN == null) continue; // if the node is null (no element exists with row and col), go to next iteration
-                Cell oppC = Game.getOpponentBoard().getCellByCoord(row, col); // Get the cell in opponent board that corresponds with the node position
-                if(oppC.isHit() && oppC.getShip() != null){ // if a cell is hit and a ship exists, style accordingly and disable cell button
-                    oppN.setDisable(true);
-                    oppN.setStyle(HIT_COLOR + DEFAULT_STYLES_NO_BG + FULL_OPACITY);
-                }
-                else if(oppC.isHit()) { // if the cell is only hit, style accordingly and disable button
-                    oppN.setDisable(true);
-                    oppN.setStyle(MISS_COLOR + DEFAULT_STYLES_NO_BG + FULL_OPACITY);
-                }
-                else { // if the cell has not been hit, use default styles and undisable cell button
-                    oppN.setDisable(false);
-                    oppN.setStyle(DEFAULT_STYLES + FULL_OPACITY);
-                }
-                Node playerN = getNode(row, col, gameYouBoard); // get player board
-                if(playerN == null) continue;
+                Node oppN = getNode(row, col, gameOpponentBoard);
+                if (oppN == null) continue;
+                Cell oppC = Game.getOpponentBoard().getCellByCoord(row, col);
+                if(oppC.isHit() && oppC.getShip() != null)
+                    oppN.setStyle(HIT_COLOR + DEFAULT_STYLES_NO_BG);
+                else if(oppC.isHit())
+                    oppN.setStyle(MISS_COLOR + DEFAULT_STYLES_NO_BG);
+                else
+                    oppN.setStyle(DEFAULT_STYLES);
+
+                Node playerN = getNode(row, col, gameYouBoard);
+                if(playerN == null) continue; // hello
                 Cell playerC = Game.getPlayerBoard().getCellByCoord(row, col);
                 if(playerC.isHit() && playerC.getShip() != null)
                     playerN.setStyle(HIT_COLOR + DEFAULT_STYLES_NO_BG);
