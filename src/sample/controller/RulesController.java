@@ -24,7 +24,6 @@ public class RulesController {
                 ioException.printStackTrace();
             }
             System.out.println("RULES CLOSED!");
-            Load.loadGame();
         });
     }
 }

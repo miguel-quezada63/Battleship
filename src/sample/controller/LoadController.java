@@ -13,6 +13,8 @@ import javafx.stage.Stage;
 import sample.model.Load;
 
 public class LoadController {
+    private File selectedFile;
+
     @FXML
     private Button loadGameBtn;
     @FXML
@@ -24,15 +26,20 @@ public class LoadController {
         chooseFileBtn.setOnAction(e -> {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Open File");
-            fileChooser.getExtensionFilters().addAll(
+            /*fileChooser.getExtensionFilters().addAll(
                     new FileChooser.ExtensionFilter("JSON Files", "*.json")
-            );
+            );*/
             Stage stage = (Stage) chooseFileBtn.getScene().getWindow();
-            File selectedFile = fileChooser.showOpenDialog(stage);
-
+            selectedFile = fileChooser.showOpenDialog(stage);
+            System.out.println(selectedFile);
         });
 
         loadGameBtn.setOnAction(e -> {
+            if(selectedFile == null)
+            {
+                System.out.println("Please select a different file!");
+            }
+            Load.loadGame(selectedFile);
             try {
                 Parent newRoot = FXMLLoader.load(getClass().getResource("/sample/view/game.fxml"));
                 Scene s = loadGameBtn.getScene();
@@ -40,7 +47,6 @@ public class LoadController {
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
-            Load.loadGame();
             System.out.println("LOAD GAME!");
         });
     }
