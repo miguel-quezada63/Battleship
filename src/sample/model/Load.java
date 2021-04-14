@@ -1,23 +1,19 @@
 package sample.model;
-
-import com.google.gson.Gson;
-
 import java.io.*;
 
 public class Load
 {
     public static void loadGame(File game) {
-        BufferedReader bufferedReader = null;
-        try {
-            bufferedReader = new BufferedReader(new FileReader(game));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        File myObj = new File(String.valueOf(game));
+        if (myObj.exists()) {
+            System.out.println("File name: " + myObj.getName());
+            System.out.println("Absolute path: " + myObj.getAbsolutePath());
+            System.out.println("Writeable: " + myObj.canWrite());
+            System.out.println("Readable " + myObj.canRead());
+            System.out.println("File size in bytes " + myObj.length());
+        } else {
+            System.out.println("The file does not exist.");
         }
-
-        Gson gson = new Gson();
-        Object json = gson.fromJson(bufferedReader, Object.class);
-
-        System.out.println(json.toString());
     }
 }
 
