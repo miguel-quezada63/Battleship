@@ -138,10 +138,12 @@ public class GameController {
         });
 
         saveMenuBtn.setOnAction(e-> {
+            //opens file chooser dialog menu to save game file
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Save File");
             fileChooser.setInitialFileName("BattleshipSave");
             fileChooser.getExtensionFilters().addAll(
+                    //adds extension so you can only save as a text file
                     new FileChooser.ExtensionFilter("Text Files (.txt)", "*.txt")
             );
             Stage stage = (Stage) saveMenuBtn.getScene().getWindow();

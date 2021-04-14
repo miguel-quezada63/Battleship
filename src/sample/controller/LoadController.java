@@ -24,10 +24,11 @@ public class LoadController {
     @FXML
     void initialize() {
         chooseFileBtn.setOnAction(e -> {
+            //opens file chooser dialog box to choose text file in order to load previous game
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Open File");
             fileChooser.getExtensionFilters().addAll(
-                    new FileChooser.ExtensionFilter("JSON Files", "*.json")
+                    new FileChooser.ExtensionFilter("TEXT Files (.txt)", "*.txt")
             );
             Stage stage = (Stage) chooseFileBtn.getScene().getWindow();
             selectedFile = fileChooser.showOpenDialog(stage);
@@ -37,12 +38,14 @@ public class LoadController {
         loadGameBtn.setOnAction(e -> {
             if(selectedFile == null)
             {
+                //error popup that opens when you try to load a null file
                 Alert errorAlert = new Alert(Alert.AlertType.ERROR);
                 errorAlert.setHeaderText("File not found");
                 errorAlert.setContentText("Please select a different file to load game");
                 errorAlert.showAndWait();
             }
             else {
+                //calls loadGame function to load the game into the board
                 Load.loadGame(selectedFile);
                 try {
                     Parent newRoot = FXMLLoader.load(getClass().getResource("/sample/view/game.fxml"));
