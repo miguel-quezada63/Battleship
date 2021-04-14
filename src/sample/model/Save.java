@@ -9,7 +9,7 @@ public class Save {
         FileWriter fileWriter = new FileWriter(save);
         fileWriter.write("Turn Number: " + Game.getTurnNum() + "\n\n");
         fileWriter.write("Player Turn: " + Game.getCurPlayer() + "\n\n");
-        fileWriter.write("Player 1 Board:" + "\n\n");
+        fileWriter.write("Player 1 Board:" + "\n");
         for(int row = 1; row < 11; ++row){
             for(int col = 1; col < 11; ++col) {
                 Cell c = Game.getPlayerBoard().getGrid()[row][col];
@@ -19,7 +19,7 @@ public class Save {
                 fileWriter.write("\n");
             }
         }
-        fileWriter.write("Player 2 Board:" + "\n\n");
+        fileWriter.write("Player 2 Board:" + "\n");
         for(int row = 1; row < 11; ++row){
             for(int col = 1; col < 11; ++col) {
                 Cell c = Game.getOpponentBoard().getGrid()[row][col];

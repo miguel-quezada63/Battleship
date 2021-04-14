@@ -485,6 +485,17 @@
                <font>
                   <Font size="11.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="quitToMenuBtn" mnemonicParsing="false" style="-fx-background-color: transparent;" styleClass="#rulesBtn:hover { -fx-background-color: red;}#rulesBtn:hover { -fx-background-color: red;}" text="Quit to Menu">
+               <font>
+                  <Font size="11.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
         </items>
       </ToolBar>

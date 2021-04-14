@@ -46,6 +46,8 @@ public class GameController {
     private Button saveMenuBtn;
     @FXML
     private Button rulesMenuBtn;
+    @FXML
+    private Button quitToMenuBtn;
 
     @FXML
     void initialize() {
@@ -136,6 +138,16 @@ public class GameController {
         gamePlayTurnBtn.setOnAction(e -> {
             switchBoard();
             disableAndHide(gameNextTurnPane);
+        });
+
+        quitToMenuBtn.setOnAction(e ->{
+            try {
+                Parent newRoot = FXMLLoader.load(getClass().getResource("/sample/view/menu.fxml"));
+                Scene s = quitToMenuBtn.getScene();
+                s.setRoot(newRoot);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
         });
 
         saveMenuBtn.setOnAction(e-> {

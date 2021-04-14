@@ -21,10 +21,17 @@
             <Font size="36.0" />
          </font>
       </Text>
-      <Button fx:id = "chooseFileBtn" layoutX="413.0" layoutY="250.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="176.0" style="-fx-background-color: #848482 #848482; -fx-font-size: 16px; -fx-font-family: sans-serif sans-serif; -fx-alignment: center;" text="CHOOSE FILE" textFill="WHITE">
+      <Button fx:id="chooseFileBtn" layoutX="413.0" layoutY="250.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="176.0" style="-fx-background-color: #848482 #848482; -fx-font-size: 16px; -fx-font-family: sans-serif sans-serif; -fx-alignment: center;" text="CHOOSE FILE" textFill="WHITE">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </Button>
+      <Button fx:id="menuBtn" layoutX="7.0" layoutY="12.0" mnemonicParsing="false" style="-fx-background-color: #848482 #848482 #848482 #848482; -fx-font-size: 16px; -fx-alignment: center; -fx-font-family: sans-serif sans-serif sans-serif sans-serif;" text="MENU" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
     </children>
 </AnchorPane>
