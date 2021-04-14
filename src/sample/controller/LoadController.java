@@ -3,8 +3,6 @@ package sample.controller;
 
 import java.io.File;
 import java.io.IOException;
-
-import com.google.gson.Gson;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
