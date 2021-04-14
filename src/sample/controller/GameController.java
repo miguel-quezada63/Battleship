@@ -10,9 +10,13 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import sample.model.Cell;
 import sample.model.Game;
+import sample.model.Save;
 import sample.utility.Player;
+import java.io.File;
 import java.io.IOException;
 
 public class GameController {
@@ -132,15 +136,22 @@ public class GameController {
         });
 
         saveMenuBtn.setOnAction(e-> {
-            try {
-                Parent newRoot = FXMLLoader.load(getClass().getResource("/sample/view/save.fxml"));
-                Scene s = saveMenuBtn.getScene();
-                s.setRoot(newRoot);
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Save File");
+            fileChooser.setInitialFileName("BattleshipSave");
+            fileChooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("Text Files (.txt)", "*.txt")
+            );
+            Stage stage = (Stage) saveMenuBtn.getScene().getWindow();
+            File saveFile = fileChooser.showSaveDialog(stage);
+            if(saveFile!=null)
+            {
+                try {
+                    Save.saveGame(saveFile);
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
             }
-
-            System.out.println("SAVE CLICKED!");
         });
 
         rulesMenuBtn.setOnAction(e-> {
