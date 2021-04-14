@@ -3,6 +3,8 @@ package sample.controller;
 
 import java.io.File;
 import java.io.IOException;
+
+import com.google.gson.Gson;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,7 +22,6 @@ public class LoadController {
 
     @FXML
     void initialize() {
-
         chooseFileBtn.setOnAction(e -> {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Open File");
