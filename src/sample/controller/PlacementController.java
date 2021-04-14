@@ -8,6 +8,7 @@ import javafx.scene.text.Text;
 import sample.model.Game;
 import sample.utility.Orientation;
 
+
 public class PlacementController {
 
     @FXML
@@ -35,6 +36,10 @@ public class PlacementController {
             }
 
         });
+
+
+
+
 
     }
 }
