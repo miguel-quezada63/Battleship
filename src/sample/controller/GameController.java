@@ -13,7 +13,6 @@ import javafx.scene.text.Text;
 import sample.model.Cell;
 import sample.model.Game;
 import sample.utility.Player;
-
 import java.io.IOException;
 
 public class GameController {

@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -27,9 +28,9 @@ public class LoadController {
         chooseFileBtn.setOnAction(e -> {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Open File");
-            /*fileChooser.getExtensionFilters().addAll(
+            fileChooser.getExtensionFilters().addAll(
                     new FileChooser.ExtensionFilter("JSON Files", "*.json")
-            );*/
+            );
             Stage stage = (Stage) chooseFileBtn.getScene().getWindow();
             selectedFile = fileChooser.showOpenDialog(stage);
             System.out.println(selectedFile);
@@ -38,7 +39,10 @@ public class LoadController {
         loadGameBtn.setOnAction(e -> {
             if(selectedFile == null)
             {
-                System.out.println("Please select a different file!");
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setHeaderText("File not found");
+                errorAlert.setContentText("Please select a different file to load game");
+                errorAlert.showAndWait();
             }
             else {
                 Load.loadGame(selectedFile);
