@@ -6,8 +6,29 @@ import java.io.IOException;
 
 public class Save {
     public static void saveGame(File save) throws IOException {
-        FileWriter myWriter = new FileWriter(save);
-        myWriter.write("Files in Java might be tricky, but it is fun enough!");
-        myWriter.close();
+        FileWriter fileWriter = new FileWriter(save);
+        fileWriter.write("Turn Number: " + Game.getTurnNum() + "\n\n");
+        fileWriter.write("Player Turn: " + Game.getCurPlayer() + "\n\n");
+        fileWriter.write("Player 1 Board:" + "\n\n");
+        for(int row = 1; row < 11; ++row){
+            for(int col = 1; col < 11; ++col) {
+                Cell c = Game.getPlayerBoard().getGrid()[row][col];
+                fileWriter.write("CELL: ");
+                fileWriter.write("Row: " + c.getRow() + ", Col: " + c.getCol() + "\n");
+                fileWriter.write("IsHit: " + c.isHit() + ", Ship:" + c.getShip() + "\n");
+                fileWriter.write("\n");
+            }
+        }
+        fileWriter.write("Player 2 Board:" + "\n\n");
+        for(int row = 1; row < 11; ++row){
+            for(int col = 1; col < 11; ++col) {
+                Cell c = Game.getOpponentBoard().getGrid()[row][col];
+                fileWriter.write("CELL: ");
+                fileWriter.write("Row: " + c.getRow() + ", Col: " + c.getCol() + "\n");
+                fileWriter.write("IsHit: " + c.isHit() + ", Ship:" + c.getShip() + "\n");
+                fileWriter.write("\n");
+            }
+        }
+        fileWriter.close();
     }
 }

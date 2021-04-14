@@ -124,7 +124,8 @@ public class GameController {
         });
 
         gameNextBtn.setOnAction(e -> {
-            if(Game.getCurPlayer() == Player.P1)
+            // Use the reverse player since we are switching turns when fire is pressed
+            if(Game.getCurPlayer() == Player.P2)
                 gamePlayerTurnText.setText("End of Player 1's turn, Player 2 turn up next!");
             else
                 gamePlayerTurnText.setText("End of Player 2's turn, Player 1 turn up next!");
@@ -138,10 +139,12 @@ public class GameController {
         });
 
         saveMenuBtn.setOnAction(e-> {
+            //opens file chooser dialog menu to save game file
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Save File");
             fileChooser.setInitialFileName("BattleshipSave");
             fileChooser.getExtensionFilters().addAll(
+                    //adds extension so you can only save as a text file
                     new FileChooser.ExtensionFilter("Text Files (.txt)", "*.txt")
             );
             Stage stage = (Stage) saveMenuBtn.getScene().getWindow();
@@ -196,7 +199,6 @@ public class GameController {
                     oppN.setDisable(false);
                     oppN.setStyle(DEFAULT_STYLES + FULL_OPACITY);
                 }
-
                 Node playerN = getNode(row, col, gameYouBoard);
                 if(playerN == null) continue; // hello
                 Cell playerC = Game.getPlayerBoard().getCellByCoord(row, col);
