@@ -25,6 +25,7 @@ public class GameController {
     private final static String FOCUS_COLOR = "-fx-background-color: #eae265;";
     private final static String DEFAULT_STYLES = "-fx-background-color: #848482; -fx-border-width: 2 2 0 0; -fx-border-color:  #5a7797;";
     private final static String DEFAULT_STYLES_NO_BG = "-fx-border-width: 1 1 0 0; -fx-border-color:  #5a7797;";
+    private final static String FULL_OPACITY = "-fx-opacity: 1.0;";
     private Node selectedItem;
     private boolean alreadyFired;
     @FXML
@@ -109,10 +110,11 @@ public class GameController {
         });
 
         gameFireBtn.setOnAction(e -> {
+            selectedItem.setDisable(true);
             if(Game.hitCell()) // hit target using curMove. If the hit was successful, display a hit on that cell
-                selectedItem.setStyle(HIT_COLOR);
+                selectedItem.setStyle(HIT_COLOR + FULL_OPACITY);
             else // else, display a miss on that cell
-                selectedItem.setStyle(MISS_COLOR);
+                selectedItem.setStyle(MISS_COLOR + FULL_OPACITY);
             Game.setCurMove(-1,-1);
             disableAndHide(gameFireBtn); // hide fire btn
             undisableAndUnhide(gameNextBtn); // show next btn
@@ -182,20 +184,26 @@ public class GameController {
                 Node oppN = getNode(row, col, gameOpponentBoard);
                 if (oppN == null) continue;
                 Cell oppC = Game.getOpponentBoard().getCellByCoord(row, col);
-                if(oppC.isHit() && oppC.getShip() != null)
-                    oppN.setStyle(HIT_COLOR + DEFAULT_STYLES_NO_BG);
-                else if(oppC.isHit())
-                    oppN.setStyle(MISS_COLOR + DEFAULT_STYLES_NO_BG);
-                else
-                    oppN.setStyle(DEFAULT_STYLES);
+                if(oppC.isHit() && oppC.getShip() != null) {
+                    oppN.setDisable(true);
+                    oppN.setStyle(HIT_COLOR + DEFAULT_STYLES_NO_BG + FULL_OPACITY);
+                }
+                else if(oppC.isHit()) {
+                    oppN.setDisable(true);
+                    oppN.setStyle(MISS_COLOR + DEFAULT_STYLES_NO_BG + FULL_OPACITY);
+                }
+                else {
+                    oppN.setDisable(false);
+                    oppN.setStyle(DEFAULT_STYLES + FULL_OPACITY);
+                }
 
                 Node playerN = getNode(row, col, gameYouBoard);
-                if(playerN == null) continue;
+                if(playerN == null) continue; // hello
                 Cell playerC = Game.getPlayerBoard().getCellByCoord(row, col);
                 if(playerC.isHit() && playerC.getShip() != null)
-                    playerN.setStyle(HIT_COLOR + DEFAULT_STYLES_NO_BG);
+                    playerN.setStyle(HIT_COLOR + DEFAULT_STYLES_NO_BG + FULL_OPACITY);
                 else if(playerC.isHit())
-                    playerN.setStyle(MISS_COLOR + DEFAULT_STYLES_NO_BG);
+                    playerN.setStyle(MISS_COLOR + DEFAULT_STYLES_NO_BG + FULL_OPACITY);
                 else
                     playerN.setStyle(DEFAULT_STYLES);
             }
