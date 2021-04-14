@@ -33,7 +33,7 @@ public class Board {
         }
         setOrientation(Orientation.HORIZONTAL);//SETS ORIENTATION TO HORIZONTAL BY DEAFULT
     }
-    // Return the respective cell based on x, y coordinate
+    // Return the respective cell based on row and col
     public Cell getCellByCoord(int row, int col){
         return grid[row][col];
     }
