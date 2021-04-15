@@ -250,6 +250,7 @@
                   <Font size="14.0" />
                </font>
             </Button>
+            <Text fx:id="shipPlacementConfirmationTxt" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="The Spot Selected was not valid please choose another!" />
          </children>
       </VBox>
    </children>

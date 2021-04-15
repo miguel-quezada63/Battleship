@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -33,6 +34,7 @@ public class PlacementController {
     private final static String FULL_OPACITY = "-fx-opacity: 1.0;";
     private Node selectedItem;
     private boolean alreadyFired;
+    private boolean properlyPlaced;
     private Orientation determine=Orientation.HORIZONTAL;//used to determine how to place the ships and
 
     @FXML
@@ -60,6 +62,10 @@ public class PlacementController {
     private Button placementNextBtn;
 
     @FXML
+    private Text shipPlacementConfirmationTxt;
+
+
+    @FXML
     void initialize(){
 
 
@@ -68,8 +74,8 @@ public class PlacementController {
 
     private void placeShips() {
         addGridEvents();//establishes a empty board with click able buttons
-
-        placementOrientationBtn.setOnAction(e -> {
+        shipPlacementConfirmationTxt.setVisible(false);//sets invisble on begin
+        placementOrientationBtn.setOnAction(e -> {//on click changes the orientation to the opposite of whatever it is
             if (determine==Orientation.HORIZONTAL){
                 placementOrientationText.setText("CURRENT ORIENTATION: VERTICAL");
                 determine=Orientation.VERTICAL;//sets the orientation to the oppostie of what it was before the click
@@ -83,12 +89,27 @@ public class PlacementController {
 
         placementNextBtn.setOnAction(e -> { //only changes when you have confirmed that the ship the user has placed is actually valid
 
+
         });
 
 
         placementBoardGrid.getChildren().forEach(item -> {//will essentially give me the cordinates of the where the user clicked and if properly then sets ship if not then prompt user
             item.setOnMouseClicked(e -> {
+                Integer row = GridPane.getRowIndex((Node) e.getSource()); // get row of the current cell
+                Integer col = GridPane.getColumnIndex((Node) e.getSource()); // get col of the current cell
+                System.out.println("Row: " + row + " Col: " + col);
+                if (row == null || col == null) return; // if either are null, do not place an event listener on this position
+                Game.setCurMove(row, col); // set current move in order to hit for later
+                System.out.println(row + " " + col);
 
+                if(verifyHorizontal(row)==true || verifyVertical(col)==true){//sets confirmation to visible and allow next to be clicked
+
+                    shipPlacementConfirmationTxt.setText("your ship has been placed!");
+                    shipPlacementConfirmationTxt.setFill(Color.GREEN);
+                }else{
+                    shipPlacementConfirmationTxt.setText("The Spot Selected was not valid please choose another!");
+                    shipPlacementConfirmationTxt.setFill(Color.RED);
+                }
 
             });
         });
@@ -150,9 +171,26 @@ public class PlacementController {
 
     }
 
+    private static boolean verifyHorizontal(Integer row){//takes in the row and current size of the ship trying to be placed to verify that there is enough space
+            Integer verify=11-row;//checks to see if the spot selected has sufficent space for the current ship
+        if(verify<5)
+            return false;
+        else
+            return true;
+    }
 
+    private static boolean verifyVertical(Integer col){//takes in the col and current size of the ship trying to be placed to verify that there is enough space
+        Integer verify=col-col;//checks to see if the spot selected has sufficent space for the current ship
+        if(verify<5)
+            return false;
+        else
+            return true;
+    }
+/*
+    private static boolean isEmpty(){//checks to see if the approved slots are actually empty,so pass in 2d array, row, col and ship type
 
-
+    }
+*/
 
 
 }
