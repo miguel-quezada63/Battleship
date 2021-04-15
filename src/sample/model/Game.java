@@ -1,6 +1,7 @@
 package sample.model;
 
 import sample.utility.Player;
+import sample.utility.ShipType;
 
 public class Game {
     private static final int X = 0;
@@ -33,6 +34,22 @@ public class Game {
         if(c.getShip() != null && c.getShip().isSunk()) // If a ship exists on this tile and this ship has been sunk, print to console
             System.out.println(c.getShip().getShipType() + " " + "has been sunk");
         return c.getShip() != null && c.isHit();  // if
+    }
+
+    public static void loadTurn(int turn, Player playerTurn){
+       // turnNum = turn;
+       // curPlayer = playerTurn;
+
+        System.out.println(turn);
+        System.out.println(playerTurn);
+    }
+    public static void loadPlayerBoard(int row, int col, boolean isHit, ShipType ship) {
+        System.out.println(row + " " + col + " " + isHit + " " + ship);
+        System.out.println("\n");
+    }
+    public static void loadOpponentBoard(int row, int col, boolean isHit, ShipType ship){
+        System.out.println(row + " " + col + " " + isHit + " " + ship);
+        System.out.println("\n");
     }
 
     public static int[] getCurMove() { return curMove; }
