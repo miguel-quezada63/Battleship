@@ -11,40 +11,39 @@ import javafx.stage.Stage;
 public class MenuController {
     @FXML
     private Button menuPlayBtn;
+
     @FXML
     private Button menuLoadBtn;
+
     @FXML
     private Button menuQuitBtn;
 
     @FXML
-    void initialize() {
-        menuPlayBtn.setOnAction(e-> {
-            try {
-                Parent newRoot = FXMLLoader.load(getClass().getResource("/sample/view/game.fxml"));
-                Scene s = menuPlayBtn.getScene();
-                s.setRoot(newRoot);
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
-            }
-            System.out.println("PLAY CLICKED!");
-        });
+    public void play() {
+        try {
+            Parent newRoot = FXMLLoader.load(getClass().getResource("/sample/view/placement.fxml"));
+            Scene s = menuPlayBtn.getScene();
+            s.setRoot(newRoot);
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+    }
 
-        menuLoadBtn.setOnAction(e -> {
-            try {
-                Parent newRoot = FXMLLoader.load(getClass().getResource("/sample/view/load.fxml"));
-                Scene s = menuLoadBtn.getScene();
-                s.setRoot(newRoot);
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
-            }
-            System.out.println("LOAD CLICKED!");
-        });
+    @FXML
+    public void load(){
+        try {
+            Parent newRoot = FXMLLoader.load(getClass().getResource("/sample/view/load.fxml"));
+            Scene s = menuLoadBtn.getScene();
+            s.setRoot(newRoot);
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+    }
 
-        menuQuitBtn.setOnAction(e -> {
-            Stage s = (Stage) menuQuitBtn.getScene().getWindow();
-            s.close();
-        });
-
+    @FXML
+    public void quit() {
+        Stage s = (Stage) menuQuitBtn.getScene().getWindow();
+        s.close();
     }
 
 }

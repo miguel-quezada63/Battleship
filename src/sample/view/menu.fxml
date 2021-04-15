@@ -13,7 +13,7 @@
       <Text fill="WHITE" layoutX="427.0" layoutY="267.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 25px; -fx-font-weight: bold;" text="BATTLESHIP" />
       <VBox layoutX="412.0" layoutY="336.0" prefHeight="224.0" prefWidth="176.0">
          <children>
-            <Button fx:id="menuPlayBtn" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="40.0" prefWidth="176.0" style="-fx-background-color: #848482; -fx-alignment: center; -fx-font-size: 16px; -fx-font-family: sans-serif;" text="PLAY GAME" textFill="WHITE">
+            <Button fx:id="menuPlayBtn" onAction="#play" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="40.0" prefWidth="176.0" style="-fx-background-color: #848482; -fx-alignment: center; -fx-font-size: 16px; -fx-font-family: sans-serif;" text="PLAY GAME" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -24,7 +24,7 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="menuLoadBtn" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="40.0" prefWidth="188.0" style="-fx-background-color: #848482; -fx-alignment: center; -fx-font-size: 16px; -fx-font-family: sans-serif;" text="LOAD GAME" textFill="WHITE">
+            <Button fx:id="menuLoadBtn" onAction="#load" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="40.0" prefWidth="188.0" style="-fx-background-color: #848482; -fx-alignment: center; -fx-font-size: 16px; -fx-font-family: sans-serif;" text="LOAD GAME" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -32,7 +32,7 @@
                   <Insets bottom="20.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="menuQuitBtn" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="40.0" prefWidth="203.0" style="-fx-background-color: #848482; -fx-alignment: center; -fx-font-size: 16px; -fx-font-family: sans-serif;" text="QUIT" textFill="WHITE">
+            <Button fx:id="menuQuitBtn" onAction="#quit" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="40.0" prefWidth="203.0" style="-fx-background-color: #848482; -fx-alignment: center; -fx-font-size: 16px; -fx-font-family: sans-serif;" text="QUIT" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
