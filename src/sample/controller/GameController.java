@@ -16,6 +16,8 @@ import sample.model.Cell;
 import sample.model.Game;
 import sample.model.Save;
 import sample.utility.Player;
+
+import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
 
@@ -39,9 +41,9 @@ public class GameController {
     @FXML
     private Pane gameNextTurnPane;
     @FXML
-    private Text gamePlayerTurnText;
+    private Text gameConfirmTurnText;
     @FXML
-    private Button gamePlayTurnBtn;
+    private Button gameConfirmNextBtn;
     @FXML
     private Button saveMenuBtn;
     @FXML
@@ -110,77 +112,6 @@ public class GameController {
                     }
                 });
         });
-
-        gameFireBtn.setOnAction(e -> {
-            selectedItem.setDisable(true);
-            if(Game.hitCell()) // hit target using curMove. If the hit was successful, display a hit on that cell
-                selectedItem.setStyle(HIT_COLOR + FULL_OPACITY);
-            else // else, display a miss on that cell
-                selectedItem.setStyle(MISS_COLOR + FULL_OPACITY);
-            Game.setCurMove(-1,-1);
-            disableAndHide(gameFireBtn); // hide fire btn
-            undisableAndUnhide(gameNextBtn); // show next btn
-            Game.nextTurn();
-            alreadyFired = true; // set already fired to true so that the player cannot fire twice
-            selectedItem = null; // unselect cell
-        });
-
-        gameNextBtn.setOnAction(e -> {
-            // Use the reverse player since we are switching turns when fire is pressed
-            if(Game.getCurPlayer() == Player.P2)
-                gamePlayerTurnText.setText("End of Player 1's turn, Player 2 turn up next!");
-            else
-                gamePlayerTurnText.setText("End of Player 2's turn, Player 1 turn up next!");
-            undisableAndUnhide(gameNextTurnPane);
-
-        });
-
-        gamePlayTurnBtn.setOnAction(e -> {
-            switchBoard();
-            disableAndHide(gameNextTurnPane);
-        });
-
-        quitToMenuBtn.setOnAction(e ->{
-            try {
-                Parent newRoot = FXMLLoader.load(getClass().getResource("/sample/view/menu.fxml"));
-                Scene s = quitToMenuBtn.getScene();
-                s.setRoot(newRoot);
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
-            }
-        });
-
-        saveMenuBtn.setOnAction(e-> {
-            //opens file chooser dialog menu to save game file
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Save File");
-            fileChooser.setInitialFileName("BattleshipSave");
-            fileChooser.getExtensionFilters().addAll(
-                    //adds extension so you can only save as a text file
-                    new FileChooser.ExtensionFilter("Text Files (.txt)", "*.txt")
-            );
-            Stage stage = (Stage) saveMenuBtn.getScene().getWindow();
-            File saveFile = fileChooser.showSaveDialog(stage);
-            if(saveFile!=null)
-            {
-                try {
-                    Save.saveGame(saveFile);
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
-                }
-            }
-        });
-
-        rulesMenuBtn.setOnAction(e-> {
-            try {
-                Parent newRoot = FXMLLoader.load(getClass().getResource("/sample/view/rules.fxml"));
-                Scene s = rulesMenuBtn.getScene();
-                s.setRoot(newRoot);
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
-            }
-            System.out.println("RULES CLICKED!");
-        });
     }
 
     private void switchBoard() {
@@ -225,6 +156,79 @@ public class GameController {
         disableAndHide(gameNextBtn);
         disableAndHide(gameFireBtn);
         alreadyFired = false;
+    }
+
+    @FXML
+    private void fire(){
+        selectedItem.setDisable(true); // disable cell so that it cannot be fired upon again
+        if(Game.hitCell()) // hit target using curMove. If the hit was successful, display a hit on that cell
+            selectedItem.setStyle(HIT_COLOR + FULL_OPACITY);
+        else // else, display a miss on that cell
+            selectedItem.setStyle(MISS_COLOR + FULL_OPACITY);
+        Game.setCurMove(-1,-1);
+        disableAndHide(gameFireBtn); // hide fire btn
+        undisableAndUnhide(gameNextBtn); // show next btn
+        Game.nextTurn(); // go to next turn in game
+        alreadyFired = true; // set already fired to true so that the player cannot fire twice
+        selectedItem = null; // unselect cell
+    }
+
+    @FXML
+    private void openRules(){
+        try {
+            Parent newRoot = FXMLLoader.load(getClass().getResource("/sample/view/rules.fxml")); // get new root FXML file
+            Scene s = rulesMenuBtn.getScene(); // get the current scene
+            s.setRoot(newRoot); // set this scene to a new root (rules.fxml)
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+    }
+
+    @FXML void save(){
+        FileChooser fileChooser = new FileChooser(); //opens file chooser dialog menu to save game file
+        fileChooser.setTitle("Save File");
+        fileChooser.setInitialFileName("BattleshipSave");
+        // adds extension so you can only save as a text file
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Text Files (.txt)", "*.txt")
+        );
+        Stage stage = (Stage) saveMenuBtn.getScene().getWindow();
+        File saveFile = fileChooser.showSaveDialog(stage);
+        if(saveFile != null)
+        {
+            try {
+                Save.saveGame(saveFile);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        }
+    }
+
+    @FXML void quit(){
+        try {
+            Parent newRoot = FXMLLoader.load(getClass().getResource("/sample/view/menu.fxml"));
+            Scene s = quitToMenuBtn.getScene();
+            s.setRoot(newRoot);
+            Game.init(); // reset game when quitting to menu
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+    }
+
+    @FXML
+    void nextTurn(){
+        switchBoard(); // when next player turn is initiated, switch the boards.
+        disableAndHide(gameNextTurnPane); // hide the player turn end screen
+    }
+
+    @FXML
+    void nextTurnConfirm(){
+        // Use the reverse player since we are switching turns when fire is pressed
+        if(Game.getCurPlayer() == Player.P2)
+            gameConfirmTurnText.setText("End of Player 1's turn, Player 2 turn up next!");
+        else
+            gameConfirmTurnText.setText("End of Player 2's turn, Player 1 turn up next!");
+        undisableAndUnhide(gameNextTurnPane);
     }
 
     // utility function for hiding and disabling a Node
