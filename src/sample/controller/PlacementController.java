@@ -12,6 +12,9 @@ import javafx.scene.text.Text;
 import sample.model.Cell;
 import sample.model.Game;
 import sample.utility.Orientation;
+import sample.utility.ShipType;
+import sample.model.Game;
+import sample.model.Board;
 
 
 public class PlacementController {
@@ -23,7 +26,9 @@ public class PlacementController {
     private boolean properlyPlaced;
     private boolean alreadyFired;
     private Orientation orientationSelected = Orientation.HORIZONTAL; // orientation selected by user
-
+    private String determineShip ="CARIER";
+    private int determineShipSize=5;
+    private ShipType boardShipType= ShipType.CARRIER;
     @FXML
     private ResourceBundle resources;
 
@@ -59,7 +64,29 @@ public class PlacementController {
 
 
     private void placeShips() {
-        addGridEvents();//establishes a empty board with click able buttons
+        for(int row = 1; row < 11; ++row) {
+            for (int col = 1; col < 11; ++col) {
+                Button btn = new Button(""); // create new button to place on grid
+                btn.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE); // set btn width and height so that it fills the entire cell area
+                btn.setStyle(DEFAULT_STYLES); // set default styles for btn
+                Cell cellOpp = Game.getOpponentBoard().getCellByCoord(row, col); // get cell corresponding with current coordinates in loop
+                if(cellOpp.isHit() && cellOpp.getShip() != null) // if the cell has a successful hit, display this on the board
+                    btn.setStyle(HIT_COLOR);
+                else if(cellOpp.isHit())
+                    btn.setStyle(MISS_COLOR);
+                placementBoardGrid.add(btn, col, row); // add the button to the grid
+                StackPane sPane = new StackPane();
+                sPane.setStyle(DEFAULT_STYLES);
+                GridPane.setFillWidth(sPane, true);
+                GridPane.setFillHeight(sPane, true);
+                Cell cellPlayer = Game.getPlayerBoard().getCellByCoord(row, col); // get cell corresponding with current coordinates in loop
+                if(cellPlayer.isHit() && cellPlayer.getShip() != null) // if the cell has a successful hit, display this on the board
+                    sPane.setStyle(HIT_COLOR);
+                else if(cellPlayer.isHit())
+                    sPane.setStyle(MISS_COLOR);
+                placementBoardGrid.add(sPane, col, row);
+            }
+        }
         placementConfirmationTxt.setVisible(false);//sets invisible on begin
         //on click changes the orientation to the opposite of whatever it is
         placementOrientationBtn.setOnAction(e -> {
@@ -87,19 +114,19 @@ public class PlacementController {
                 Game.setCurMove(row, col); // set current move in order to hit for later
                 System.out.println(row + " " + col);
                 //sets confirmation to visible and allow next to be clicked
-                if(verifyHorizontal(row) || verifyVertical(col)){
+                if(verifyHorizontal(row,col,boardShipType) || verifyVertical(col,row,boardShipType)){
                     placementConfirmationTxt.setText("your ship has been placed!");
                     placementConfirmationTxt.setFill(Color.GREEN);
+
                 } else {
                     placementConfirmationTxt.setText("The Spot Selected was not valid please choose another!");
                     placementConfirmationTxt.setFill(Color.RED);
                 }
-
             });
         });
 
     }
-
+    /*
     private void addGridEvents() {
         for(int row = 1; row < 11; ++row) {
             for (int col = 1; col < 11; ++col) {
@@ -142,21 +169,42 @@ public class PlacementController {
             });
         });
     }
-
+*/
     //takes in the row and current size of the ship trying to be placed to verify that there is enough space
-    private static boolean verifyHorizontal(Integer row){
-        Integer verify = 10 - row; //checks to see if the spot selected has sufficient space for the current ship
-        return verify >= 5;
+    private static boolean verifyHorizontal(Integer row,Integer col,ShipType boardShipType){
+        Integer verify = 10 - col; //checks to see if the spot selected has sufficient space for the current ship
+        Integer colIn=col;//the column needs to be iterated through
+        if(verify >= boardShipType.getSpaces()){//if there is enough space, check if that space is empty
+            for(int i=0;i<boardShipType.getSpaces();i++ ){
+                Cell c= Game.getPlayerBoard().getCellByCoord(row,colIn);//cell is equal to what ever is in that spot
+                if(c.getShip()!=null)
+                    return false;
+                colIn++;//increases col to iterate through it
+            }
+                return true;//if it does not return false from the for loop then return true because we know its all null
+        }else
+            return false;
+
     }
 
     //takes in the col and current size of the ship trying to be placed to verify that there is enough space
-    private static boolean verifyVertical(Integer col){
-        Integer verify= 10 - col; //checks to see if the spot selected has sufficient space for the current ship
-        return verify >= 5;
+    private static boolean verifyVertical(Integer col,Integer row,ShipType boardShipType){
+        Integer verify = 10 - row; //checks to see if the spot selected has sufficient space for the current ship
+        Integer rowIn=row;
+        Integer colIn=col;
+        if(verify >= boardShipType.getSpaces()){//if there is enough space, check if that space is empty
+            for(int i=0;i<boardShipType.getSpaces();i++ ){
+                Cell c= Game.getPlayerBoard().getCellByCoord(rowIn,colIn);//cell is equal to what ever is in that spot
+                if(c.getShip()!=null)
+                    return false;
+                rowIn++;
+            }
+            return true;
+        }else //if there is not enough space then return false
+            return false;
     }
 
-    //checks to see if the approved slots are actually empty,so pass in 2d array, row, col and ship type
-    private static boolean isEmpty(){
-        return false;
-    }
+
+
+
 }
