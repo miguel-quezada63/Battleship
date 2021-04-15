@@ -65,6 +65,7 @@ public class GameController {
         selectedItem = null; // selected item to null so that no conflicts occur on first turn
         if (!Game.isStarted()) Game.init(); // init game settings
         addGridEvents(); // add all grid buttons and btn events
+        System.out.println("This actually works");
     }
 
     private void addGridEvents() {

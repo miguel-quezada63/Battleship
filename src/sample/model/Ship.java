@@ -31,7 +31,7 @@ public class Ship {
 
     public Orientation getOrientation() {
         return orientation;
-    }
+    }//returns the orientation
 
     public ShipType getShipType() {
         return shipType;
