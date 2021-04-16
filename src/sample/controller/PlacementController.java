@@ -117,7 +117,6 @@ public class PlacementController {
                 if(verifyHorizontal(row,col,boardShipType) || verifyVertical(col,row,boardShipType)){
                     placementConfirmationTxt.setText("your ship has been placed!");
                     placementConfirmationTxt.setFill(Color.GREEN);
-
                 } else {
                     placementConfirmationTxt.setText("The Spot Selected was not valid please choose another!");
                     placementConfirmationTxt.setFill(Color.RED);
