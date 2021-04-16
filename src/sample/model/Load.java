@@ -14,7 +14,7 @@ public class Load {
         int row = 0;
         int col = 0;
         boolean isHit = false;
-        ShipType ship = null;
+        Ship ship = null;
 
 
         File file = new File(String.valueOf(game));
@@ -49,10 +49,18 @@ public class Load {
             isHit = sc.nextBoolean();
             sc.next();
             String val = sc.next();
-            if (!(val.equals("null"))) {
-                ship = ShipType.valueOf(sc.next());
+            //if (!(val.equals("null"))) {
+            //    ship = sc.next();
+           // }
+
+            if(playerTurn == Player.P1)
+            {
+                Game.getP1Board().loadGrid(row, col, isHit, ship);
             }
-            Game.loadPlayerBoard(row, col, isHit, ship);
+            else
+            {
+                Game.getP2Board().loadGrid(row,col,isHit,ship);
+            }
         }
         sc.nextLine();
         sc.nextLine();
@@ -68,10 +76,17 @@ public class Load {
             isHit = sc.nextBoolean();
             sc.next();
             String val = sc.next();
-            if (!(val.equals("null"))) {
-                ship = ShipType.valueOf(sc.next());
+            //if (!(val.equals("null"))) {
+             //   ship = ShipType.valueOf(sc.next());
+            //}
+            if(playerTurn == Player.P1)
+            {
+                Game.getP2Board().loadGrid(row, col, isHit, ship);
             }
-            Game.loadOpponentBoard(row, col, isHit, ship);
+            else
+            {
+                Game.getP1Board().loadGrid(row,col,isHit,ship);
+            }
         }
 
 

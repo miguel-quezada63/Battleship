@@ -1,5 +1,7 @@
 package sample.model;
 
+import sample.utility.ShipType;
+
 public class Cell {
     private Ship ship;
     private boolean isHit;
@@ -16,6 +18,14 @@ public class Cell {
     public Cell(int x, int y, Ship ship) {
         this.ship = ship;
         this.isHit = false;
+        this.row = x;
+        this.col = y;
+    }
+
+    public Cell(int x, int y, boolean isHit, Ship ship)
+    {
+        this.ship = ship;
+        this.isHit = isHit;
         this.row = x;
         this.col = y;
     }

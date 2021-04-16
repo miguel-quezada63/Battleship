@@ -43,8 +43,8 @@ public class Game {
     }
 
     public static void loadTurn(int turn, Player playerTurn){
-       // turnNum = turn;
-       // curPlayer = playerTurn;
+        turnNum = turn;
+        curPlayer = playerTurn;
 
         System.out.println(turn);
         System.out.println(playerTurn);
