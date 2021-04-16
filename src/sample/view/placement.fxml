@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -214,7 +215,11 @@
       </Text>
       <VBox layoutX="215.0" layoutY="535.0" prefHeight="208.0" prefWidth="570.0">
          <children>
-            <Text fx:id="placementShipText1" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="PLAYER 1, PLEASE PLACE YOUR SHIPS" textAlignment="CENTER" wrappingWidth="569.9404296875">
+            <Text fx:id="placementVerifyText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="THE SPOT YOU SELECTED IS NOT VALID, PLEASE SELECT ANOTHER" textAlignment="CENTER" wrappingWidth="569.517578125">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Text>
+            <Text fx:id="placementPlayerText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="PLAYER 1, PLEASE PLACE YOUR SHIPS" textAlignment="CENTER" wrappingWidth="569.9404296875">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -248,15 +253,7 @@
             </Text>
             <HBox prefHeight="22.0" prefWidth="430.0" style="-fx-alignment: center;">
                <children>
-                  <Button fx:id="placementNextBtn" mnemonicParsing="false" prefHeight="50.0" prefWidth="80.0" style="-fx-background-color: #848482;" text="Next Ship" textFill="WHITE">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets right="10.0" />
-                     </HBox.margin>
-                  </Button>
-                  <Button fx:id="placementOrientationBtn" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #848482;" text="Change Orientation" textFill="WHITE">
+                  <Button fx:id="placementOrientationBtn" mnemonicParsing="false" onAction="#changeOrientation" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #848482;" text="Change Orientation" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -266,11 +263,24 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </HBox>
-            <Text fx:id="placementConfirmationTxt" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="THE SPOT YOU SELECTED IS NOT VALID, PLEASE SELECT ANOTHER" textAlignment="CENTER" wrappingWidth="569.517578125">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font></Text>
          </children>
       </VBox>
+      <Pane fx:id="placementConfirmPane" layoutX="10.0" layoutY="10.0" prefHeight="750.0" prefWidth="1000.0" style="-fx-background-color: #5a7797;">
+         <children>
+            <Text fx:id="placementConfirmText" fill="WHITE" layoutX="2.0" layoutY="282.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PLAYER 1 HAS FINISHED PLACING SHIPS, PLAYER 2 IS UP NEXT!" textAlignment="CENTER" wrappingWidth="1000.0">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Text>
+            <Button fx:id="placementConfirmBtn" layoutX="435.0" layoutY="356.0" mnemonicParsing="false" onAction="#placeNextShips" prefHeight="39.0" prefWidth="133.0" style="-fx-background-color: #848482;" text="PLACE SHIPS" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

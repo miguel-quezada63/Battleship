@@ -1,6 +1,8 @@
 package sample.model;
 
+import sample.utility.Orientation;
 import sample.utility.Player;
+import sample.utility.ShipType;
 
 public class Game {
     private static final int X = 0;
@@ -23,8 +25,13 @@ public class Game {
 
     public static void nextTurn() {
         curMove = new int[2]; // reset current move
-
+        alternateCurPlayer();
         ++turnNum; // increase turn number
+    }
+
+    public static boolean placeShipOnBoard(int headRow, int headCol, ShipType shipType, Orientation orientation, boolean isP1){
+        Board board = isP1 ? p1Board : p2Board;
+        return board.placeShip(headRow, headCol, shipType, orientation);
     }
 
     public static boolean hitCell(){
@@ -66,7 +73,15 @@ public class Game {
         return started;
     }
 
-    public void alternateCurPlayer() {
+    public static void alternateCurPlayer() {
         curPlayer = curPlayer == Player.P1 ? Player.P2 : Player.P1; // alternate players
+    }
+
+    public static Board getP1Board(){
+        return p1Board;
+    }
+
+    public static Board getP2Board(){
+        return p2Board;
     }
 }
