@@ -31,7 +31,7 @@ public class PlacementController {
     private final static ShipType[] SHIP_ORDER = {ShipType.CARRIER, ShipType.BATTLESHIP, ShipType.CRUISER, ShipType.SUBMARINE, ShipType.DESTROYER};
     private Orientation orientationSelected = Orientation.HORIZONTAL;
     private int currentShip = 0;
-    private boolean p1Placing = true;
+    private boolean p1Placing = true; // boolean used for determining whether player 1 is placing ships
     @FXML
     private GridPane placementBoardGrid;
     @FXML
