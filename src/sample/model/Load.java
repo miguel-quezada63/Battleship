@@ -64,7 +64,6 @@ public class Load {
         }
         sc.nextLine();
         sc.nextLine();
-        System.out.println("Opponent Board: \n");
         for(int i = 0; i<100; i++)
         {
             sc.next();
