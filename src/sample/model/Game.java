@@ -35,20 +35,21 @@ public class Game {
     }
 
     public static boolean hitCell(){
-        Cell c =  getOpponentBoard().getCellByCoord(curMove[0], curMove[1]); // get cell within the specified board in which the user clicked
-        c.hit();// hit that cell in the specified board
-        if(c.getShip() != null && c.getShip().isSunk()) // If a ship exists on this tile and this ship has been sunk, print to console
+        Board board = getOpponentBoard();
+        Cell c =  board.getCellByCoord(curMove[0], curMove[1]); // get cell within the specified board in which the user clicked
+        c.hit(); // hit that cell in the specified board
+        // If a ship exists on this tile and this ship has been sunk, print to console and reduce availableShips
+        if(c.getShip() != null && c.getShip().isSunk()) {
             System.out.println(c.getShip().getShipType() + " " + "has been sunk");
-        return c.getShip() != null && c.isHit();  // if
+            board.sinkShip();
+        }
+        return c.getShip() != null && c.isHit();
     }
 
     public static void loadTurn(int turn, Player playerTurn){
-        init();
         turnNum = turn;
         curPlayer = playerTurn;
     }
-
-    public static int[] getCurMove() { return curMove; }
 
     public static Player getCurPlayer() {
         return curPlayer;
@@ -71,12 +72,11 @@ public class Game {
         curMove[Y] = y;
     }
 
+    public static boolean detectWin(){
+        return p1Board.getAvailableShips() <= 0 || p2Board.getAvailableShips() <= 0;
+    }
     public static void setStarted(boolean started) {
         Game.started = started;
-    }
-
-    public static boolean isStarted() {
-        return started;
     }
 
     public static void alternateCurPlayer() {
@@ -89,5 +89,10 @@ public class Game {
 
     public static Board getP2Board(){
         return p2Board;
+    }
+
+    public static Player getWinner(){
+        if(!detectWin()) return null;
+        return p2Board.getAvailableShips() <= 0 ? Player.P1 : Player.P2;
     }
 }
