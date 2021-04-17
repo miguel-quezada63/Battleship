@@ -31,7 +31,7 @@ public class Game {
 
     public static boolean placeShipOnBoard(int headRow, int headCol, ShipType shipType, Orientation orientation, boolean isP1){
         Board board = isP1 ? p1Board : p2Board;
-        return board.placeShip(headRow, headCol, shipType, orientation);
+        return board.placeShip(headRow, headCol, shipType, orientation, false);
     }
 
     public static boolean hitCell(){

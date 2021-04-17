@@ -39,7 +39,7 @@ public class Board {
     }
 
     // place a ship on the board
-    public boolean placeShip(int headRow, int headCol, ShipType shipType, Orientation orientation) {
+    public boolean placeShip(int headRow, int headCol, ShipType shipType, Orientation orientation, boolean isHit) {
         Cell[][] gridCopy = createGridCopy();
         Ship ship = new Ship(shipType, orientation);
         if(orientation.equals(Orientation.HORIZONTAL)) {
@@ -47,12 +47,14 @@ public class Board {
                 Cell c = gridCopy[headRow][col];
                 if(c.getShip() != null) return false;
                 c.setShip(ship);
+                if(isHit) c.hit();
             }
         } else {
             for (int row = headRow; row < headRow + shipType.getSpaces(); ++row) {
                 Cell c = gridCopy[row][headCol];
                 if(c.getShip() != null) return false;
                 c.setShip(ship);
+                if(isHit) c.hit();
             }
         }
         grid = gridCopy;
