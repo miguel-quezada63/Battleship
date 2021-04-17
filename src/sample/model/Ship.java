@@ -21,8 +21,7 @@ public class Ship {
         --availableSpaces;
     }
 
-    public ShipType getShipType() {
-        return shipType;
-    }
+    public ShipType getShipType() {return shipType; }
 
+    public Orientation getOrientation() { return orientation; }
 }
