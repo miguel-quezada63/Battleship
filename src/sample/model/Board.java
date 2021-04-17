@@ -24,8 +24,7 @@ public class Board {
         }
     }
 
-    void loadGrid(int row, int col, boolean isHit, Ship ship)
-    {
+    void loadGrid(int row, int col, boolean isHit, Ship ship) {
         grid[row][col] = new Cell(row,col, isHit, ship);
     }
 

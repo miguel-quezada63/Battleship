@@ -25,9 +25,12 @@ public class Cell {
     public Cell(int x, int y, boolean isHit, Ship ship)
     {
         this.ship = ship;
-        this.isHit = isHit;
         this.row = x;
         this.col = y;
+        if(isHit == true)
+        {
+            hit();
+        }
     }
 
     public void hit() {

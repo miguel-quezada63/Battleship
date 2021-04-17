@@ -48,10 +48,22 @@ public class Load {
             sc.next();
             isHit = sc.nextBoolean();
             sc.next();
-            String val = sc.next();
-            //if (!(val.equals("null"))) {
-            //    ship = sc.next();
-           // }
+            String tempShip = sc.next();
+            if (tempShip.equals("null")) {
+                ship = null;
+            }
+            else if(tempShip.equals("CARRIER")){
+                ship = new Ship(ShipType.CARRIER);
+            }
+            else if(tempShip.equals("CRUISE")){
+                ship = new Ship(ShipType.CRUISER);
+            }
+            else if(tempShip.equals("SUBMARINE")){
+                ship = new Ship(ShipType.SUBMARINE);
+            }
+            else if(tempShip.equals("DESTROYER")){
+                ship = new Ship(ShipType.DESTROYER);
+            }
 
             if(playerTurn == Player.P1)
             {
@@ -74,10 +86,23 @@ public class Load {
             sc.next();
             isHit = sc.nextBoolean();
             sc.next();
-            String val = sc.next();
-            //if (!(val.equals("null"))) {
-             //   ship = ShipType.valueOf(sc.next());
-            //}
+            String tempShip = sc.next();
+            if (tempShip.equals("null")) {
+                ship = null;
+            }
+            else if(tempShip.equals("CARRIER")){
+                ship = new Ship(ShipType.CARRIER);
+            }
+            else if(tempShip.equals("CRUISE")){
+                ship = new Ship(ShipType.CRUISER);
+            }
+            else if(tempShip.equals("SUBMARINE")){
+                ship = new Ship(ShipType.SUBMARINE);
+            }
+            else if(tempShip.equals("DESTROYER")){
+                ship = new Ship(ShipType.DESTROYER);
+            }
+
             if(playerTurn == Player.P1)
             {
                 Game.getP2Board().loadGrid(row, col, isHit, ship);
@@ -87,15 +112,5 @@ public class Load {
                 Game.getP1Board().loadGrid(row,col,isHit,ship);
             }
         }
-
-
-
     }
 }
-
-
-
-
-
-
-

@@ -1,5 +1,7 @@
 package sample.model;
 
+import sample.utility.ShipType;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -15,7 +17,13 @@ public class Save {
                 Cell c = Game.getPlayerBoard().getGrid()[row][col];
                 fileWriter.write("CELL: ");
                 fileWriter.write("Row: " + c.getRow() + " Col: " + c.getCol() + "\n");
-                fileWriter.write("IsHit: " + c.isHit() + " Ship: " + c.getShip() + "\n");
+                fileWriter.write("IsHit: " + c.isHit());
+                if(c.getShip() != null) {
+                fileWriter.write(" Ship: " + c.getShip().getShipType() + "\n");
+                }
+                else {
+                    fileWriter.write(" Ship " + null + "\n");
+                }
                 fileWriter.write("\n");
             }
         }
@@ -24,7 +32,13 @@ public class Save {
                 Cell c = Game.getOpponentBoard().getGrid()[row][col];
                 fileWriter.write("CELL: ");
                 fileWriter.write("Row: " + c.getRow() + " Col: " + c.getCol() + "\n");
-                fileWriter.write("IsHit: " + c.isHit() + " Ship: " + c.getShip() + "\n");
+                fileWriter.write("IsHit: " + c.isHit());
+                if(c.getShip() != null) {
+                    fileWriter.write(" Ship: " + c.getShip().getShipType() + "\n");
+                }
+                else {
+                    fileWriter.write(" Ship " + null + "\n");
+                }
                 fileWriter.write("\n");
             }
         }
