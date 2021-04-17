@@ -41,7 +41,7 @@ public class Board {
     // place a ship on the board
     public boolean placeShip(int headRow, int headCol, ShipType shipType, Orientation orientation) {
         Cell[][] gridCopy = createGridCopy();
-        Ship ship = new Ship(shipType);
+        Ship ship = new Ship(shipType, orientation);
         if(orientation.equals(Orientation.HORIZONTAL)) {
             for (int col = headCol; col < headCol + shipType.getSpaces(); ++col) {
                 Cell c = gridCopy[headRow][col];
