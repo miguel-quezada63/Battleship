@@ -61,7 +61,7 @@ public class LoadController {
                 //calls loadGame function to load the game into the board
                 Load.loadGame(selectedFile);
                 try {
-                    Parent newRoot = FXMLLoader.load(getClass().getResource("/sample/view/game.fxml"));
+                    Parent newRoot = FXMLLoader.load(getClass().getResource("/sample/view/Game.fxml"));
                     Scene s = loadGameBtn.getScene();
                     s.setRoot(newRoot);
                 } catch (IOException ioException) {

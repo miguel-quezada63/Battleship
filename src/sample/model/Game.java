@@ -46,19 +46,8 @@ public class Game {
     }
 
     public static void loadTurn(int turn, Player playerTurn){
-       // turnNum = turn;
-       // curPlayer = playerTurn;
-
-        System.out.println(turn);
-        System.out.println(playerTurn);
-    }
-    public static void loadPlayerBoard(int row, int col, boolean isHit, ShipType ship) {
-        System.out.println(row + " " + col + " " + isHit + " " + ship);
-        System.out.println("\n");
-    }
-    public static void loadOpponentBoard(int row, int col, boolean isHit, ShipType ship){
-        System.out.println(row + " " + col + " " + isHit + " " + ship);
-        System.out.println("\n");
+        turnNum = turn;
+        curPlayer = playerTurn;
     }
 
     public static Player getCurPlayer() {
