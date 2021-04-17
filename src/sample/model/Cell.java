@@ -1,7 +1,5 @@
 package sample.model;
 
-import sample.utility.ShipType;
-
 public class Cell {
     private Ship ship;
     private boolean isHit;
