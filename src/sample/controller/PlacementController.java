@@ -7,10 +7,13 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
@@ -24,6 +27,7 @@ import sample.utility.ShipType;
 
 
 public class PlacementController {
+    final static private int SHIP_SIZE = 20;
     private final static String PLAYER_TEXT = ", PLEASE PLACE YOUR SHIPS";
     private final static String SHIP_TEXT = "CURRENT SHIP: ";
     private final static String SIZE_TEXT = "SHIP SIZE: ";
@@ -32,6 +36,7 @@ public class PlacementController {
     private Orientation orientationSelected = Orientation.HORIZONTAL;
     private int currentShip = 0;
     private boolean p1Placing = true; // boolean used for determining whether player 1 is placing ships
+
     @FXML
     private GridPane placementBoardGrid;
     @FXML
@@ -67,8 +72,8 @@ public class PlacementController {
                 placementBoardGrid.add(btn, col, row); // add the button to the grid
             }
         }
+        // place event listeners on every button on our placement grid so that we can determine where user has placed ship
         placementBoardGrid.getChildren().forEach(item -> {
-            //will essentially give me the coordinates of the where the user clicked and if properly then sets ship if not then prompt user
             item.setOnMouseClicked(e -> {
                 Integer row = GridPane.getRowIndex((Node) e.getSource()); // get row of the current cell
                 Integer col = GridPane.getColumnIndex((Node) e.getSource()); // get col of the current cell
@@ -123,31 +128,12 @@ public class PlacementController {
 
     private void updateBoard(){
         Board board = p1Placing ? Game.getP1Board() : Game.getP2Board();
-        System.out.println("P1PLACING: " + p1Placing);
         for(int row = 1; row <= 10; ++row) {
             for(int col = 1; col <= 10; ++col) {
                 Ship ship = board.getCellByCoord(row, col).getShip();
-                if(ship == null) continue;
+                if (ship == null) continue;
                 ShipType st = ship.getShipType();
-                if(st == ShipType.CARRIER)
-                    placementBoardGrid.add(new Rectangle(30, 30), col, row);
-                else if(st == ShipType.BATTLESHIP) {
-                    Rectangle rect = new Rectangle(30, 30);
-                    rect.setStyle("-fx-fill: lime");
-                    placementBoardGrid.add(rect, col, row);
-                } else if(st == ShipType.CRUISER) {
-                    Rectangle rect = new Rectangle(30, 30);
-                    rect.setStyle("-fx-fill: coral");
-                    placementBoardGrid.add(rect, col, row);
-                } else if(st == ShipType.SUBMARINE) {
-                    Rectangle rect = new Rectangle(30, 30);
-                    rect.setStyle("-fx-fill: aqua");
-                    placementBoardGrid.add(rect, col, row);
-                } else if(st == ShipType.DESTROYER) {
-                    Rectangle rect = new Rectangle(30, 30);
-                    rect.setStyle("-fx-fill: violet");
-                    placementBoardGrid.add(rect, col, row);
-                }
+                addShiptoGrid(row, col, st.getColor(), st.getType().charAt(0));
             }
         }
     }
@@ -210,5 +196,21 @@ public class PlacementController {
     private <T extends Node> void undisableAndUnhide(T el){
         el.setDisable(false);
         el.setVisible(true);
+    }
+
+    private void addShiptoGrid(int row, int col, String color, Character shipAbbrev) {
+        Rectangle rect = new Rectangle(SHIP_SIZE, SHIP_SIZE);
+        rect.setStyle("-fx-fill: " + color);
+        rect.setStyle("-fx-fill: " + color);
+        Text text = new Text(shipAbbrev.toString());
+        String textColor = color == "black" ? "white" : "black";
+        text.setStyle("-fx-font-weight: bold; -fx-fill: " + textColor);
+        StackPane sp = new StackPane();
+        sp.getChildren().addAll(rect, text);
+        HBox hBox = new HBox(sp);
+        GridPane.setFillWidth(hBox,true);
+        GridPane.setFillHeight(hBox,true);
+        hBox.setAlignment(Pos.CENTER);
+        placementBoardGrid.add(hBox, col, row);
     }
 }

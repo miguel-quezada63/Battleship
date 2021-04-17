@@ -1,0 +1,18 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Battleship:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Battleship_jar</output-path>
+    <root id="archive" name="Battleship.jar">
+      <element id="module-output" name="Battleship" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/javafx-fxml-11.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/javafx-fxml-11-win.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/javafx-controls-11.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/javafx-controls-11-win.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/javafx-graphics-11.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/javafx-graphics-11-win.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/javafx-base-11.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/javafx-base-11-win.jar" path-in-jar="/" />
+      <element id="library" level="module" name="javafx-fxml" module-name="Battleship" />
+      <element id="dir-copy" path="$PROJECT_DIR$/src/sample" />
+    </root>
+  </artifact>
+</component>

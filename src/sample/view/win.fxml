@@ -1,31 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
-
+<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.WinController">
    <children>
       <Pane fx:id="gameWinPane" prefHeight="750.0" prefWidth="1000.0" style="-fx-background-color: #5a7797;">
          <children>
-            <HBox layoutX="385.0" layoutY="284.0" prefHeight="100.0" prefWidth="200.0" />
-            <Button fx:id="playAgainBtn" layoutX="393.0" layoutY="455.0" mnemonicParsing="false" onAction="#playAgain" prefHeight="32.0" prefWidth="96.0" style="-fx-background-color: #848482;" text="Play again!" textAlignment="CENTER" textFill="#e3ebff">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
+            <HBox layoutX="352.0" layoutY="335.0" prefHeight="40.0" prefWidth="296.0">
+               <children>
+                  <Button fx:id="winPlayBtn" mnemonicParsing="false" onAction="#playAgain" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #848482;" text="PLAY AGAIN" textAlignment="CENTER" textFill="#e3ebff">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="winQuitBtn" mnemonicParsing="false" onAction="#quitToMenu" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #848482;" text="QUIT TO MENU" textFill="#e3ebff">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <Text fx:id="winPlayerText" fill="WHITE" layoutY="297.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PLAYER 1 HAS WON!" textAlignment="CENTER" wrappingWidth="1000.0">
                <font>
-                  <Font name="System Bold" size="14.0" />
+                  <Font name="System Bold" size="24.0" />
                </font>
-            </Button>
-            <Button fx:id="quitGameButton" layoutX="559.0" layoutY="458.0" mnemonicParsing="false" onAction="#quitGame" prefHeight="39.0" prefWidth="133.0" style="-fx-background-color: #848482;" text="Quit game" textFill="#e3ebff">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Button>
+            </Text>
          </children>
       </Pane>
    </children>

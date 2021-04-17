@@ -2,25 +2,33 @@ package sample.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import sample.model.Cell;
 import sample.model.Game;
 import sample.model.Save;
+import sample.model.Ship;
 import sample.utility.Player;
+import sample.utility.ShipType;
+
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class GameController {
     private final static String HIT_COLOR = "-fx-background-color: #e71f32;";
+    private final static int SHIP_SIZE = 15;
     private final static String MISS_COLOR = "-fx-background-color: #ffffff;";
     private final static String FOCUS_COLOR = "-fx-background-color: #eae265;";
     private final static String DEFAULT_STYLES = "-fx-background-color: #848482; -fx-border-width: 2 2 0 0; -fx-border-color:  #5a7797;";
@@ -58,32 +66,8 @@ public class GameController {
     }
 
     private void addGridEvents() {
-        for(int row = 1; row < 11; ++row) {
-            for (int col = 1; col < 11; ++col) {
-                Button btn = new Button(""); // create new button to place on grid
-                btn.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE); // set btn width and height so that it fills the entire cell area
-                btn.setStyle(DEFAULT_STYLES); // set default styles for btn
-                Cell cellOpp = Game.getOpponentBoard().getCellByCoord(row, col); // get cell corresponding with current coordinates in loop
-                if(cellOpp.isHit() && cellOpp.getShip() != null) // if the cell has a successful hit, display this on the board
-                    btn.setStyle(HIT_COLOR);
-                else if(cellOpp.isHit())
-                    btn.setStyle(MISS_COLOR);
-                gameOpponentBoard.add(btn, col, row); // add the button to the grid
-                // Create stack panes on player grid to display hits and misses
-                StackPane sPane = new StackPane(); // create new stack pane object to be added to cell
-                sPane.setStyle(DEFAULT_STYLES); // set default border styles on stack panes
-                GridPane.setFillWidth(sPane, true); // fill width of cell
-                GridPane.setFillHeight(sPane, true); // fill height of cell
-                Cell cellPlayer = Game.getPlayerBoard().getCellByCoord(row, col); // get cell corresponding with current coordinates in loop
-                // if the cell has a successful hit, display this on the board
-                if(cellPlayer.isHit() && cellPlayer.getShip() != null)
-                    sPane.setStyle(HIT_COLOR);
-                else if(cellPlayer.isHit())
-                    sPane.setStyle(MISS_COLOR);
-                gameYouBoard.add(sPane, col, row); // add stack pane to respective cell on grid
-            }
-        }
-
+        createOppBoard();
+        createPlayerBoard();
         gameOpponentBoard.getChildren().forEach(item -> {
                 item.setOnMouseClicked(e -> {
                     // If the user has not already fired at least one shot on the board
@@ -93,7 +77,6 @@ public class GameController {
                             selectedItem.setStyle(DEFAULT_STYLES);
                         Integer row = GridPane.getRowIndex((Node) e.getSource()); // get row of the current cell
                         Integer col = GridPane.getColumnIndex((Node) e.getSource()); // get col of the current cell
-                        System.out.println("Row: " + row + " Col: " + col);
                         if (row == null || col == null) return; // if either are null do nothing as it is an invalid position
                         Game.setCurMove(row, col); // set current move in order to hit for later
                         selectedItem = item; // select cell for future styling
@@ -105,6 +88,16 @@ public class GameController {
     }
 
     private void switchBoard() {
+        // Store grid headers for next player placement
+        ArrayList<Node> nodeList = new ArrayList();
+        // Add grid header nodes to list
+        for(int i = 0; i <= 19; ++i)
+            nodeList.add(gameYouBoard.getChildren().get(i));
+        gameYouBoard.getChildren().clear();
+        createPlayerBoard();
+        // put grid headers back on board
+        for(int i = 0; i <= 19; ++i)
+            gameYouBoard.getChildren().add(0, nodeList.get(i));
         for(int row = 1; row < 11; ++row){
             for(int col = 1; col < 11; ++col){
                 Node oppN = getNode(row, col, gameOpponentBoard); // get node in board that corresponds to coordinate
@@ -125,18 +118,6 @@ public class GameController {
                     oppN.setDisable(false);
                     oppN.setStyle(DEFAULT_STYLES + FULL_OPACITY);
                 }
-                Node playerN = getNode(row, col, gameYouBoard); // get node in board that corresponds to coordinate
-                if(playerN == null) continue; // if node at position does not exist, skip this position
-                Cell playerC = Game.getPlayerBoard().getCellByCoord(row, col); // get cell in game grid for given coordinate
-                // if the cell is hit and a ship exists on this cell, display it as red
-                if(playerC.isHit() && playerC.getShip() != null)
-                    playerN.setStyle(HIT_COLOR + DEFAULT_STYLES_NO_BG + FULL_OPACITY);
-                // else if it is only hit and no ship exists on this cell, display it as white
-                else if(playerC.isHit())
-                    playerN.setStyle(MISS_COLOR + DEFAULT_STYLES_NO_BG + FULL_OPACITY);
-                // if not hit, use default background color
-                else
-                    playerN.setStyle(DEFAULT_STYLES);
             }
         }
         disableAndHide(gameNextBtn); // disable and hide next turn button for next player
@@ -156,6 +137,8 @@ public class GameController {
         Game.setCurMove(-1,-1);
         disableAndHide(gameFireBtn); // hide and disable fire btn
         undisableAndUnhide(gameNextBtn); // show and undisable next btn
+        if(Game.detectWin())
+            goToWinScreen();
         Game.nextTurn(); // initiate next turn in game
         alreadyFired = true; // set already fired to true so that the player cannot fire twice
         selectedItem = null; // unselect the fired upon cell
@@ -238,6 +221,95 @@ public class GameController {
                 return node;
         }
         return null;
+    }
+
+    private void addShiptoGrid(int row, int col, String color, Character shipAbbrev) {
+        Rectangle rect = new Rectangle(SHIP_SIZE, SHIP_SIZE);
+        rect.setStyle("-fx-fill: " + color);
+        rect.setStyle("-fx-fill: " + color);
+        Text text = new Text(shipAbbrev.toString());
+        String textColor = color == "black" ? "white" : "black";
+        text.setStyle("-fx-font-weight: bold; -fx-fill: " + textColor);
+        StackPane sp = new StackPane();
+        sp.getChildren().addAll(rect, text);
+        HBox hBox = new HBox(sp);
+        GridPane.setFillWidth(hBox,true);
+        GridPane.setFillHeight(hBox,true);
+        hBox.setAlignment(Pos.CENTER);
+        gameYouBoard.add(hBox, col, row);
+    }
+
+    private void createPlayerBoard(){
+        for(int row = 1; row <= 10; ++row){
+            for(int col = 1; col <= 10; ++col){
+                StackPane sPane=new StackPane(); // create new stack pane object to be added to cell
+                sPane.setStyle(DEFAULT_STYLES); // set default border styles on stack panes
+                GridPane.setFillWidth(sPane,true); // fill width of cell
+                GridPane.setFillHeight(sPane,true); // fill height of cell
+                Cell cellPlayer=Game.getPlayerBoard().getCellByCoord(row,col); // get cell corresponding with current coordinates in loop
+                // if the cell has a successful hit, display this on the board
+                if(cellPlayer.isHit()&&cellPlayer.getShip()!=null)
+                    sPane.setStyle(HIT_COLOR);
+                else if(cellPlayer.isHit())
+                    sPane.setStyle(MISS_COLOR);
+                gameYouBoard.add(sPane,col,row); // add stack pane to respective cell on grid
+                Node playerN = getNode(row, col, gameYouBoard); // get node in board that corresponds to coordinate
+                if(playerN == null) continue; // if node at position does not exist, skip this position
+                Cell playerC = Game.getPlayerBoard().getCellByCoord(row, col); // get cell in game grid for given coordinate
+                Ship ship = playerC.getShip(); // get the ship on corresponding cell of player grid
+                if(ship == null) continue;
+                ShipType st = ship.getShipType(); // get the ship type of the ship on cell
+                // if the cell is hit and a ship exists on this cell, display it as red
+                if(playerC.isHit() && playerC.getShip() != null)
+                    playerN.setStyle(HIT_COLOR + DEFAULT_STYLES_NO_BG + FULL_OPACITY);
+                    // else if it is only hit and no ship exists on this cell, display it as white
+                else if(playerC.isHit())
+                    playerN.setStyle(MISS_COLOR + DEFAULT_STYLES_NO_BG + FULL_OPACITY);
+                    // if not hit, use default background color
+                else
+                    playerN.setStyle(DEFAULT_STYLES);
+                // place ships on player's board
+                addShiptoGrid(row, col, st.getColor(), st.getType().charAt(0));
+            }
+        }
+    }
+
+    private void createOppBoard() {
+        for (int row = 1; row < 11; ++row) {
+            for (int col = 1; col < 11; ++col) {
+                Button btn = new Button(""); // create new button to place on grid
+                btn.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE); // set btn width and height so that it fills the entire cell area
+                btn.setStyle(DEFAULT_STYLES); // set default styles for btn
+                Cell cellOpp = Game.getOpponentBoard().getCellByCoord(row, col); // get cell corresponding with current coordinates in loop
+                if (cellOpp.isHit() && cellOpp.getShip() != null) // if the cell has a successful hit, display this on the board
+                    btn.setStyle(HIT_COLOR);
+                else if (cellOpp.isHit())
+                    btn.setStyle(MISS_COLOR);
+                gameOpponentBoard.add(btn, col, row); // add the button to the grid
+                // Create stack panes on player grid to display hits and misses
+                StackPane sPane = new StackPane(); // create new stack pane object to be added to cell
+                sPane.setStyle(DEFAULT_STYLES); // set default border styles on stack panes
+                GridPane.setFillWidth(sPane, true); // fill width of cell
+                GridPane.setFillHeight(sPane, true); // fill height of cell
+                Cell cellPlayer = Game.getPlayerBoard().getCellByCoord(row, col); // get cell corresponding with current coordinates in loop
+                // if the cell has a successful hit, display this on the board
+                if (cellPlayer.isHit() && cellPlayer.getShip() != null)
+                    sPane.setStyle(HIT_COLOR);
+                else if (cellPlayer.isHit())
+                    sPane.setStyle(MISS_COLOR);
+                gameYouBoard.add(sPane, col, row); // add stack pane to respective cell on grid
+            }
+        }
+    }
+
+    private void goToWinScreen(){
+        try {
+            Parent newRoot = FXMLLoader.load(getClass().getResource("/sample/view/win.fxml"));
+            Scene s = gameNextBtn.getScene();
+            s.setRoot(newRoot);
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
     }
 
 }

@@ -9,7 +9,7 @@ public class Board {
     final static int MAX_COL = 11;
     private Cell[][] grid = new Cell[MAX_ROW][MAX_COL]; // Grid holding cells for game
     private int shipsToPlace = 5;
-
+    private int availableShips = 5;
     // Initialize our grid
     public Board() {
         initGrid();
@@ -17,6 +17,7 @@ public class Board {
 
     // place empty cells throughout our grid with respective coordinates
     void initGrid() {
+        availableShips = 5;
         for(int row = 1; row < 11; ++row) {
             for(int col = 1; col < 11; ++col) {
                 grid[row][col] = new Cell(row, col);
@@ -68,8 +69,11 @@ public class Board {
         return gridCopy;
     }
 
-    public int getShipsToPlace() {
-        return this.shipsToPlace;
+    public void sinkShip(){
+        --availableShips;
     }
 
+    public int getAvailableShips() {
+        return availableShips;
+    }
 }
