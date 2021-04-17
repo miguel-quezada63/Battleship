@@ -15,6 +15,7 @@ public class Load {
         int col = 0;
         boolean isHit = false;
         Ship ship = null;
+        int grid[][] = new int[10][10];
 
 
         File file = new File(String.valueOf(game));
@@ -38,41 +39,36 @@ public class Load {
         sc.nextLine();
         sc.nextLine();
         sc.nextLine();
-        for(int i = 0; i<100; i++)
+        for(int i = 1; i<11; i++)
         {
-            sc.next();
-            sc.next();
-            row = sc.nextInt();
-            sc.next();
-            col = sc.nextInt();
-            sc.next();
-            isHit = sc.nextBoolean();
-            sc.next();
-            String tempShip = sc.next();
-            if (tempShip.equals("null")) {
-                ship = null;
-            }
-            else if(tempShip.equals("CARRIER")){
-                ship = new Ship(ShipType.CARRIER);
-            }
-            else if(tempShip.equals("CRUISE")){
-                ship = new Ship(ShipType.CRUISER);
-            }
-            else if(tempShip.equals("SUBMARINE")){
-                ship = new Ship(ShipType.SUBMARINE);
-            }
-            else if(tempShip.equals("DESTROYER")){
-                ship = new Ship(ShipType.DESTROYER);
-            }
+                sc.next();
+                sc.next();
+                row = sc.nextInt();
+                sc.next();
+                col = sc.nextInt();
+                sc.next();
+                isHit = sc.nextBoolean();
+                sc.next();
 
-            if(playerTurn == Player.P1)
-            {
-                Game.getP1Board().loadGrid(row, col, isHit, ship);
-            }
-            else
-            {
-                Game.getP2Board().loadGrid(row,col,isHit,ship);
-            }
+
+                String tempShip = sc.next();
+                if (tempShip.equals("null")) {
+                    ship = null;
+                } else if (tempShip.equals("CARRIER")) {
+                    ship = new Ship(ShipType.CARRIER);
+                } else if (tempShip.equals("CRUISE")) {
+                    ship = new Ship(ShipType.CRUISER);
+                } else if (tempShip.equals("SUBMARINE")) {
+                    ship = new Ship(ShipType.SUBMARINE);
+                } else if (tempShip.equals("DESTROYER")) {
+                    ship = new Ship(ShipType.DESTROYER);
+                }
+
+                if (playerTurn == Player.P1) {
+                    Game.getP1Board().loadGrid(row, col, isHit, ship);
+                } else {
+                    Game.getP2Board().loadGrid(row, col, isHit, ship);
+                }
         }
         sc.nextLine();
         sc.nextLine();

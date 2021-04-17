@@ -38,7 +38,7 @@ public class Game {
         Board board = getOpponentBoard();
         Cell c =  board.getCellByCoord(curMove[0], curMove[1]); // get cell within the specified board in which the user clicked
         c.hit(); // hit that cell in the specified board
-        // If a ship exists on this tile and this ship has been sunk, print to console and reduce availableShips
+        System.out.println(board.getAvailableShips());// If a ship exists on this tile and this ship has been sunk, print to console and reduce availableShips
         if(c.getShip() != null && c.getShip().isSunk()) {
             System.out.println(c.getShip().getShipType() + " " + "has been sunk");
             board.sinkShip();
@@ -47,6 +47,7 @@ public class Game {
     }
 
     public static void loadTurn(int turn, Player playerTurn){
+        init();
         turnNum = turn;
         curPlayer = playerTurn;
     }
