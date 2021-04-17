@@ -34,6 +34,8 @@ public class Board {
 
     // Return the respective cell based on row and col
     public Cell getCellByCoord(int row, int col){
+        Cell c = grid[row][col];
+        c.hit();
         return grid[row][col];
     }
 
@@ -44,10 +46,11 @@ public class Board {
         if(orientation.equals(Orientation.HORIZONTAL)) {
             for (int col = headCol; col < headCol + shipType.getSpaces(); ++col) {
                 Cell c = gridCopy[headRow][col];
-                if(c.getShip() != null) return false;
+                if (c.getShip() != null) return false;
                 c.setShip(ship);
-                if(isHit) c.hit();
+                if (isHit) c.hit();
             }
+
         } else {
             for (int row = headRow; row < headRow + shipType.getSpaces(); ++row) {
                 Cell c = gridCopy[row][headCol];

@@ -20,9 +20,11 @@ public class Save {
                 fileWriter.write("IsHit: " + c.isHit());
                 if(c.getShip() != null) {
                 fileWriter.write(" Ship: " + c.getShip().getShipType() + "\n");
+                fileWriter.write("Orientation: "+ c.getShip().getOrientation() + "\n");
                 }
                 else {
                     fileWriter.write(" Ship " + null + "\n");
+                    fileWriter.write("Orientation: " + null + "\n");
                 }
                 fileWriter.write("\n");
             }
@@ -35,9 +37,11 @@ public class Save {
                 fileWriter.write("IsHit: " + c.isHit());
                 if(c.getShip() != null) {
                     fileWriter.write(" Ship: " + c.getShip().getShipType() + "\n");
+                    fileWriter.write("Orientation: "+ c.getShip().getOrientation() + "\n");
                 }
                 else {
                     fileWriter.write(" Ship " + null + "\n");
+                    fileWriter.write("Orientation: " + null + "\n");
                 }
                 fileWriter.write("\n");
             }
